@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canary.mapper.ArticleMapper">
+
+    <!--增-->
+    <insert id="insert" parameterType="com.canary.model.ArticleModel" useGeneratedKeys="true" keyProperty="id">
+        insert into t_article(
+            menu_id,title,content,author,source_name,source_url,click_count,up_count,down_count,rank,delete_status,operator,operate_time,creator,create_time
+        ) values(
+            #{menuId},#{title},#{content},#{author},#{sourceName},#{sourceUrl},0,0,0,#{rank},'NotDelete',#{operator},now(),#{creator},now()
+        );
+    </insert>
+
+    <!--删-->
+    <update id="delete" parameterType="com.canary.model.ArticleModel">
+        update t_article
+        set delete_status = 'Delete',operator = #{operator},operate_time = now()
+        where id = #{id} and delete_status = 'NotDelete'
+    </update>
+
+    <!--改-->
+    <update id="update" parameterType="com.canary.model.ArticleModel">
+        update t_article
+        set menu_id = #{menuId},title = #{title},content = #{content},author = #{author},source_name = #{sourceName},source_url = #{sourceUrl},rank = #{rank},operator = #{operator},operate_time = now()
+        where id = #{id} and delete_status = 'NotDelete'
+    </update>
+
+    <!--查 根据主键查询文章-->
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="ArticleResultMap">
+        select ta.id,ta.menu_id as articleMenuId,ta.title,ta.content,ta.author,
+        ta.source_name as sourceName,ta.source_url as sourceUrl,ta.click_count as clickCount,ta.up_count as upCount,
+        ta.down_count as downCount,ta.rank,ta.delete_status as deleteStatus,ta.operator,ta.operate_time as operateTime,
+        ta.creator,ta.create_time as createTime,
+        tm.id as menuId,tm.name as menuName,
+        tt.id as tagId,tt.name as tagName,tt.description as tagDescription,tt.rank as tagRank
+        from t_article ta
+        left outer join t_menu as tm on ta.menu_id = tm.id
+        left outer join t_article_tag_relation as tr on ta.id = tr.article_id
+		left outer join t_tag as tt on tr.tag_id = tt.id
+        where ta.id = #{id} and ta.delete_status = 'NotDelete' and tm.delete_status = 'NotDelete' and tr.delete_status = 'NotDelete' and tt.delete_status = 'NotDelete'
+        order by ta.rank asc
+    </select>
+
+    <resultMap id="ArticleResultMap" type="com.canary.model.ArticleRelationModel">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="author" column="author"/>
+        <result property="sourceName" column="sourceName"/>
+        <result property="sourceUrl" column="sourceUrl"/>
+        <result property="clickCount" column="clickCount"/>
+        <result property="upCount" column="upCount"/>
+        <result property="downCount" column="downCount"/>
+        <result property="rank" column="rank"/>
+        <result property="deleteStatus" column="deleteStatus"/>
+        <result property="operator" column="operator"/>
+        <result property="operateTime" column="operateTime"/>
+        <result property="creator" column="creator"/>
+        <result property="createTime" column="createTime"/>
+        <association property="menu" javaType="com.canary.model.MenuModel">
+            <id property="id" column="menuId"/>
+            <result property="name" column="menuName"/>
+        </association>
+        <collection property="tags" ofType="com.canary.model.TagModel">
+            <id property="id" column="tagId"/>
+            <result property="name" column="tagName"/>
+            <result property="description" column="tagDescription"/>
+            <result property="rank" column="tagRank"/>
+            <result property="deleteStatus" column="tagDeleteStatus"/>
+            <result property="operator" column="tagOperator"/>
+            <result property="operateTime" column="tagOperateTime"/>
+            <result property="creator" column="tagCreator"/>
+            <result property="createTime" column="tagCreateTime"/>
+        </collection>
+    </resultMap>
+
+    <!--查 分页查询-->
+    <select id="select" parameterType="com.canary.model.ArticleModel" resultMap="ArticleResultMap">
+        select ta.id,ta.menu_id as articleMenuId,ta.title,ta.content,ta.author,
+        ta.source_name as sourceName,ta.source_url as sourceUrl,ta.click_count as clickCount,ta.up_count as upCount,
+        ta.down_count as downCount,ta.rank,ta.delete_status as deleteStatus,ta.operator,ta.operate_time as operateTime,
+        ta.creator,ta.create_time as createTime,
+        tm.id as menuId,tm.name as menuName,
+        tt.id as tagId,tt.name as tagName,tt.description as tagDescription,tt.rank as tagRank
+        from t_article ta
+        left outer join t_menu as tm on ta.menu_id = tm.id
+        left outer join t_article_tag_relation as tr on ta.id = tr.article_id
+        left outer join t_tag as tt on tr.tag_id = tt.id
+        <where>
+            ta.delete_status = 'NotDelete'
+            and tm.delete_status = 'NotDelete'
+            and tr.delete_status = 'NotDelete'
+            and tt.delete_status = 'NotDelete'
+            <if test="menuId != null">
+                and ta.menu_id = #{menuId}
+            </if>
+            <if test="title != null">
+                and ta.title like concat('%',#{title},'%')
+            </if>
+        </where>
+        order by ta.rank asc
+        <if test="offset != null and count != null">
+            limit #{offset},#{count}
+        </if>
+    </select>
+
+    <!--查询文章总数-->
+    <select id="selectTotalCount" parameterType="com.canary.model.ArticleModel" resultType="java.lang.Integer">
+        select count(1)
+        from t_article ta
+        <where>
+            ta.delete_status = 'NotDelete'
+            <if test="menuId != null">
+                and ta.menu_id = #{menuId}
+            </if>
+            <if test="title != null">
+                and ta.title like concat('%',#{title},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectArticleModelList" parameterType="com.canary.model.ArticleModel" resultType="com.canary.model.ArticleModel">
+        select ta.id,ta.menu_id as articleMenuId,ta.title,ta.content,ta.author,
+        ta.source_name as sourceName,ta.source_url as sourceUrl,ta.click_count as clickCount,ta.up_count as upCount,
+        ta.down_count as downCount,ta.rank,ta.delete_status as deleteStatus,ta.operator,ta.operate_time as operateTime,
+        ta.creator,ta.create_time as createTime
+        from t_article ta
+        <where>
+            ta.delete_status = 'NotDelete'
+            <if test="menuId != null">
+                and ta.menu_id = #{menuId}
+            </if>
+        </where>
+        order by ta.rank asc
+        <if test="offset != null and count != null">
+            limit #{offset},#{count}
+        </if>
+    </select>
+
+    <!--查询最热文章-->
+    <select id="selectHot" parameterType="com.canary.model.ArticleModel" resultType="com.canary.model.ArticleModel">
+        select id,menu_id as menuId,title,content,author,source_name as sourceName,source_url as sourceUrl,click_count as clickCount,up_count as upCount,
+        down_count as downCount,rank,delete_status as deleteStatus,operator,operate_time as operateTime,creator,create_time as createTime
+        from t_article ta
+        where  ta.delete_status = 'NotDelete'
+        order by ta.up_count desc
+        limit #{count}
+    </select>
+
+</mapper>

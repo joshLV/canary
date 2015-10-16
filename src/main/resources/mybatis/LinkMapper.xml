@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canary.mapper.LinkMapper">
+
+    <!--增-->
+    <insert id="insert" parameterType="org.extra.model.LinkModel" useGeneratedKeys="true" keyProperty="id">
+        insert into t_link(
+            name,url,description,rank,delete_status,operator,operate_time,creator,create_time
+        ) values(
+            #{name},#{url},#{description},#{rank},'NotDelete',#{operator},now(), #{creator},now()
+        );
+    </insert>
+
+    <!--删-->
+    <update id="delete" parameterType="org.extra.model.LinkModel">
+        update t_link
+        set delete_status = 'Delete',operator = #{operator},operate_time = now()
+        where id = #{id} and delete_status = 'NotDelete'
+    </update>
+
+    <!--改-->
+    <update id="update" parameterType="org.extra.model.LinkModel">
+        update t_link
+        set name = #{name},url = #{url},description = #{description},rank = #{rank},operator = #{operator},operate_time = now()
+        where id = #{id} and delete_status = 'NotDelete'
+    </update>
+
+    <!--查-->
+    <select id="select" resultType="org.extra.model.LinkModel">
+        select id,name,url,description,rank,delete_status as deleteStatus,operator,operate_time as operateTime,creator,create_time as createTime
+        from t_link
+        where delete_status = 'NotDelete'
+        order by rank;
+    </select>
+
+</mapper>

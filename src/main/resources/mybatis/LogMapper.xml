@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canary.mapper.LogMapper">
+
+    <!--新增-->
+    <insert id="insert" parameterType="com.canary.model.LogModel" useGeneratedKeys="true" keyProperty="id">
+        insert into t_log(
+        username,password,question,answer,result,address,ip,delete_status,operator,operate_time,creator,create_time
+        ) values(
+        #{username}, #{password},#{question},#{answer},#{result},#{address},#{ip},'NotDelete','system',now(), 'system',now()
+        );
+    </insert>
+
+    <!--删除-->
+    <update id="delete" parameterType="com.canary.model.LogModel">
+        update t_log
+        set delete_status = 'Delete',operator = #{operator},operate_time = now()
+        where id = #{id} and delete_status = 'NotDelete'
+    </update>
+
+    <!--查 按时间分页查询登陆记录-->
+    <select id="select" parameterType="com.canary.model.LogModel" resultType="com.canary.model.LogModel">
+        select id,username,password,question,answer,result,address,ip,delete_status as
+        deleteStatus,operator,operate_time as operateTime,creator,create_time as createTime
+        from t_log
+        <where>
+            delete_status = 'NotDelete'
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+        </where>
+        order by id desc
+        <if test="offset != null and count != null">
+            limit #{offset},#{count}
+        </if>
+    </select>
+
+    <!--查询总数-->
+    <select id="selectTotalCount" parameterType="com.canary.model.LogModel" resultType="java.lang.Integer">
+        select count(1)
+        from t_log
+        <where>
+            delete_status = 'NotDelete'
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+        </where>
+        <if test="offset != null and count != null">
+            limit #{offset},#{count}
+        </if>
+    </select>
+
+</mapper>

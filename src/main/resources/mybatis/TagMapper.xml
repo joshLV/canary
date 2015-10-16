@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canary.mapper.TagMapper">
+
+    <!--增-->
+    <insert id="insert" parameterType="com.canary.model.TagModel" useGeneratedKeys="true" keyProperty="id">
+        insert into t_tag(
+            name,description,rank,delete_status,operator,operate_time,creator,create_time
+        ) values(
+            #{name},#{description},#{rank},'NotDelete',#{operator},now(), #{creator},now()
+        );
+    </insert>
+
+    <!--删-->
+    <update id="delete" parameterType="com.canary.model.TagModel">
+        update t_tag
+        set delete_status = 'Delete',operator = #{operator},operate_time = now()
+        where id = #{id} and delete_status = 'NotDelete'
+    </update>
+
+    <!--改-->
+    <update id="update" parameterType="com.canary.model.TagModel">
+        update t_tag
+        set name = #{name},description = #{description},rank = #{rank},operator = #{operator},operate_time = now()
+        where id = #{id} and delete_status = 'NotDelete'
+    </update>
+
+    <!--查-->
+    <select id="select" resultType="com.canary.model.TagModel">
+        select id,name,description,rank,delete_status as deleteStatus,operator,operate_time as operateTime,creator,create_time as createTime
+        from t_tag
+        where delete_status = 'NotDelete'
+        order by rank;
+    </select>
+
+</mapper>

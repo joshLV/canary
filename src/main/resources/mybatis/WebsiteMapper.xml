@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canary.mapper.WebsiteMapper">
+
+    <update id="update" parameterType="com.canary.model.WebsiteModel">
+        update t_website
+        set
+        value = #{value},
+        operator = #{operator},
+        operate_time = now()
+        where delete_status = 'NotDelete' and name = #{name};
+    </update>
+
+    <select id="select" resultType="com.canary.model.WebsiteModel">
+        select id,name,value,description,delete_status as deleteStatus,operator,operate_time as operateTime,creator,create_time as createTime
+        from t_website
+        where delete_status = 'NotDelete';
+    </select>
+
+    <select id="selectByName" parameterType="java.lang.String" resultType="com.canary.model.WebsiteModel">
+        select id,name,value,description,delete_status as deleteStatus,operator,operate_time as operateTime,creator,create_time as createTime
+        from t_website
+        where delete_status = 'NotDelete' and name = #{name};
+    </select>
+
+</mapper>

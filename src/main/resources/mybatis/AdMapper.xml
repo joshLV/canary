@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canary.mapper.AdMapper">
+
+    <!--改-->
+    <update id="update" parameterType="org.extra.model.AdModel">
+        update t_ad
+        set script = #{script},enable_status = #{enableStatus},operator = #{operator},operate_time = now()
+        where id = #{id} and delete_status = 'NotDelete'
+    </update>
+
+    <!--查-->
+    <select id="select" resultType="org.extra.model.AdModel">
+        select id,site,script,enable_status as enableStatus,delete_status as deleteStatus,operator,operate_time as operateTime,creator,create_time as createTime
+        from t_ad
+        where delete_status = 'NotDelete'
+    </select>
+
+</mapper>

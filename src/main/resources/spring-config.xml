@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+ 	http://www.springframework.org/schema/context
+ 	http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config/>
+
+    <context:component-scan base-package="com.canary.dao"/>
+
+    <context:component-scan base-package="com.canary.service"/>
+
+    <context:component-scan base-package="com.sunny.bootstrap"/>
+
+    <context:component-scan base-package="com.canary.job"/>
+
+    <!--配置在config中可以监控到root和web容器启动完成，配置在spring-mvc.xml中只能监控到web容器启动-->
+    <context:component-scan base-package="com.canary.listener"/>
+
+    <!--类中使用@Value("${value_name}")-->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath*:/config/develop/canary.properties</value>
+            </list>
+        </property>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean>
+
+</beans>
