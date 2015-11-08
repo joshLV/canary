@@ -9,7 +9,7 @@
 
     <!--ehcache-->
     <bean id="ehCacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-        <property name="configLocation" value="classpath:ehcache-failsafe.xml"/>
+        <property name="configLocation" value="classpath:ehcache.xml"/>
     </bean>
 
     <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
