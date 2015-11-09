@@ -5,7 +5,7 @@
 
     <groupId>com.canary</groupId>
     <artifactId>canary</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>canary</name>
 
@@ -25,9 +25,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.sunny</groupId>
+            <groupId>com.github.sunlin901203</groupId>
             <artifactId>sunny</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
+            <version>0.0.3</version>
         </dependency>
         <!--required dependency-->
         <!-- java server pages standard tag library -->
