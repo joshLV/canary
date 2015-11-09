@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="threadPoolTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor"
+          lazy-init="true">
+        <property name="corePoolSize" value="${thread_pool_core_pool_size}"/>
+        <property name="maxPoolSize" value="${thread_pool_max_pool_size}"/>
+        <property name="queueCapacity" value="${thread_pool_queue_capacity}"/>
+        <property name="keepAliveSeconds" value="${thread_pool_keep_alive_seconds}"/>
+        <property name="rejectedExecutionHandler">
+            <bean class="${thread_pool_rejected_execution_handler}"/>
+        </property>
+    </bean>
+
+</beans>

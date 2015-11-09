@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 注意:这里的参数(如用户名、密码)都是针对邮件发送者的 -->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${mail_host}"/>
+        <property name="port" value="${mail_port}"/>
+        <property name="protocol" value="${mail_protocol}"/>
+        <property name="defaultEncoding" value="${mail_encoding}"/>
+        <property name="username" value="${mail_username}"/>
+        <property name="password" value="${mail_password}"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.from">${mail_from}</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.timeout">20000</prop>
+                <prop key="mail.smtp.port">465</prop>
+                <prop key="mail.smtp.socketFactory.port">465</prop>
+                <prop key="mail.smtp.socketFactory.fallback">false</prop>
+                <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="mailComponent" class="com.sunny.plugin.mail.MailComponent">
+        <property name="mailSender" ref="mailSender"/>
+    </bean>
+
+</beans>

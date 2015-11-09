@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress ALL -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+ 	http://www.springframework.org/schema/context
+ 	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/tx
+ 	http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:annotation-config/>
+
+    <!-- 数据源配置，2小时运行一次空闲连接回收器线程 -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${data_source_driver_class_name}"/>
+        <property name="url" value="${data_source_url}"/>
+        <property name="username" value="${data_source_username}"/>
+        <property name="password" value="${data_source_password}"/>
+        <property name="testOnBorrow" value="${data_source_test_on_borrow}"/>
+        <property name="testWhileIdle" value="${data_source_test_while_idle}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${data_source_time_between_eviction_runs_millis}"/>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="${mybatis_configLocation}"/>
+        <property name="mapperLocations" value="${mybatis_mapperLocations}"/>
+        <property name="typeAliasesPackage" value="${mybatis_typeAliasesPackage}"/>
+    </bean>
+
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg ref="sqlSessionFactory"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+        <qualifier value="transactionManager"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+</beans>

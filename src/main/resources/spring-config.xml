@@ -13,12 +13,17 @@
 
     <context:component-scan base-package="com.canary.service"/>
 
-    <context:component-scan base-package="com.sunny.bootstrap"/>
-
     <context:component-scan base-package="com.canary.job"/>
 
     <!--配置在config中可以监控到root和web容器启动完成，配置在spring-mvc.xml中只能监控到web容器启动-->
     <context:component-scan base-package="com.canary.listener"/>
+
+    <import resource="spring-datasource.xml"/>
+    <import resource="spring-thread-pool.xml"/>
+    <import resource="spring-quartz.xml"/>
+    <import resource="spring-ehcache.xml"/>
+    <import resource="spring-mail.xml"/>
+    <import resource="spring-upload.xml"/>
 
     <!--类中使用@Value("${value_name}")-->
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
