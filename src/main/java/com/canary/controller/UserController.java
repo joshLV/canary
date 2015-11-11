@@ -32,9 +32,9 @@ import javax.servlet.http.HttpServletResponse;
  * @since 2015-07-23
  */
 @Controller
-public class LoginController {
+public class UserController {
 
-    private static final Logger logger = Logger.getLogger(LoginController.class);
+    private static final Logger logger = Logger.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
@@ -44,6 +44,11 @@ public class LoginController {
 
     @Autowired
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
+
+    /**
+     * todo 用户注册
+     */
+
 
     /**
      * 用户登陆
