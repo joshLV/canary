@@ -30,6 +30,8 @@
         <property name="locations">
             <list>
                 <value>classpath*:/config/develop/application.properties</value>
+                <!--<value>classpath*:/config/test/application.properties</value>-->
+                <!--<value>classpath*:/config/online/application.properties</value>-->
             </list>
         </property>
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
