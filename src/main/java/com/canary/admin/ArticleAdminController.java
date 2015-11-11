@@ -55,7 +55,17 @@ public class ArticleAdminController {
             param.setOperator(UserRequestContext.getUsername());
             param.setCreator(UserRequestContext.getUsername());
 
-            //todo 验证参数
+            // 验证参数
+            ValidatorTool.validateNotNull(param, "-1", "参数有误");
+            ValidatorTool.validateNotNull(param.getMenuId(), "-1", "参数有误");
+            ValidatorTool.validateString(param.getTags(), 0, Integer.MAX_VALUE, "-1", "参数有误");
+            ValidatorTool.validateString(param.getTitle(), 0, Integer.MAX_VALUE, "-1", "参数有误");
+            ValidatorTool.validateString(param.getContent(), 0, Integer.MAX_VALUE, "-1", "参数有误");
+            ValidatorTool.validateString(param.getAuthor(), 0, Integer.MAX_VALUE, "-1", "参数有误");
+            ValidatorTool.validateNumber(param.getRank(), "-1", "参数有误");
+            //来源名称和来源链接可以为空
+//            ValidatorTool.validateString(param.getSourceName(),0,Integer.MAX_VALUE,"-1","参数有误");
+//            ValidatorTool.validateString(param.getSourceUrl(), 0, Integer.MAX_VALUE, "-1", "参数有误");
 
             //新增文章 返回文章主键
             result.setObject(articleService.insert(param));
@@ -117,11 +127,17 @@ public class ArticleAdminController {
             //设置用户
             param.setOperator(UserRequestContext.getUsername());
 
-            //todo 验证参数
-            ValidatorTool.validate(param, "-1", "参数错误");
+            // 验证参数
+            ValidatorTool.validateNotNull(param, "-1", "参数有误");
             ValidatorTool.validate(param.getId(), "-1", "参数错误");
+            ValidatorTool.validateNotNull(param.getMenuId(), "-1", "参数有误");
+            ValidatorTool.validateString(param.getTags(), 0, Integer.MAX_VALUE, "-1", "参数有误");
+            ValidatorTool.validateString(param.getTitle(), 0, Integer.MAX_VALUE, "-1", "参数有误");
+            ValidatorTool.validateString(param.getContent(), 0, Integer.MAX_VALUE, "-1", "参数有误");
+            ValidatorTool.validateString(param.getAuthor(), 0, Integer.MAX_VALUE, "-1", "参数有误");
+            ValidatorTool.validateNumber(param.getRank(), "-1", "参数有误");
 
-            //删除
+            //修改
             articleService.update(param);
 
             result.setCode(0);
