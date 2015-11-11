@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -201,7 +200,7 @@ public class ArticleAdminController {
     @Role(role = {"Admin", "Super"})
     @RequestMapping(value = "/admin/image/upload", method = RequestMethod.POST)
     @ResponseBody
-    public Result imageUpload(@RequestParam("files") CommonsMultipartFile[] files, HttpServletRequest request, HttpServletResponse response) {
+    public Result imageUpload(@RequestParam("files") CommonsMultipartFile[] files, HttpServletRequest request) {
         Result<Object> result = new Result<Object>();
 
         List<String> names = new ArrayList<String>();

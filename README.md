@@ -47,9 +47,9 @@
 - www.canary.com/admin/tag/update?id=1&name=卡通&description=卡通头像&rank=50
 - www.canary.com/admin/tag/select
 - 004(完成)文章
-- www.canary.com/admin/article/insert?menuId=1&tags=1|2|3&title=山村咏怀&content=一去二三里，烟村四五家。亭台六七座，八九十枝花。&author=邵康节&sourceName=百度百科&sourceUrl=http://baike.baidu.com/view/597973.htm&rank=50
+- www.canary.com/admin/article/insert?menuId=1&tags=1,2,3&title=山村咏怀&content=一去二三里，烟村四五家。亭台六七座，八九十枝花。&author=邵康节&sourceName=百度百科&sourceUrl=http://baike.baidu.com/view/597973.htm&rank=50
 - www.canary.com/admin/article/delete?id=2
-- www.canary.com/admin/article/update?id=1&menuId=1&tags=1|2|3|4&title=山村咏怀update&content=一去二三里，烟村四五家。亭台六七座，八九十枝花。update&author=邵康节update&sourceName=百度百科update&sourceUrl=http://baike.baidu.com/view/597973.htm&rank=100
+- www.canary.com/admin/article/update?id=1&menuId=1&tags=1,2,3,4&title=山村咏怀update&content=一去二三里，烟村四五家。亭台六七座，八九十枝花。update&author=邵康节update&sourceName=百度百科update&sourceUrl=http://baike.baidu.com/view/597973.htm&rank=100
 - www.canary.com/admin/article/select?id=1
 - www.canary.com/admin/articles/select?menuId=1&page=1&count=30&title=山村咏怀
 - www.canary.com/admin/image/upload

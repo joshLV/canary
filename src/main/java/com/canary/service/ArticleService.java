@@ -57,7 +57,7 @@ public class ArticleService {
         String tags = param.getTags();
         List<Integer> tagList = new ArrayList<Integer>();
         if (tags != null && tags.trim().length() > 0) {
-            String[] tagArray = tags.split("\\|");
+            String[] tagArray = tags.split(",");
             for (String tmp : tagArray) {
                 tagList.add(Integer.valueOf(tmp));
             }
@@ -119,7 +119,7 @@ public class ArticleService {
         String tags = param.getTags();
         List<Integer> tagList = new ArrayList<Integer>();
         if (tags != null && tags.trim().length() > 0) {
-            String[] tagArray = tags.split("\\|");
+            String[] tagArray = tags.split(",");
             for (String tmp : tagArray) {
                 tagList.add(Integer.valueOf(tmp));
             }
