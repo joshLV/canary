@@ -11,7 +11,7 @@
 
     <properties>
         <!--spring4 has bug @ResponseBody can not use-->
-        <project.build.spring>4.1.6.RELEASE</project.build.spring>
+        <project.build.spring>4.2.2.RELEASE</project.build.spring>
         <project.build.spring3>3.2.13.RELEASE</project.build.spring3>
         <project.build.spring4>4.1.6.RELEASE</project.build.spring4>
         <project.build.mybatis>3.2.8</project.build.mybatis>

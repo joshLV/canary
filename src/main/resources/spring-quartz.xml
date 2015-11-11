@@ -7,6 +7,16 @@
        http://www.springframework.org/schema/task
        http://www.springframework.org/schema/task/spring-task.xsd ">
 
-    <task:annotation-driven executor="threadPoolTaskExecutor" proxy-target-class="true"/>
+    <task:annotation-driven executor="quartzExecutor" proxy-target-class="true"/>
+
+    <bean id="quartzExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" lazy-init="true">
+        <property name="corePoolSize" value="${thread_pool_core_pool_size}"/>
+        <property name="maxPoolSize" value="${thread_pool_max_pool_size}"/>
+        <property name="queueCapacity" value="${thread_pool_queue_capacity}"/>
+        <property name="keepAliveSeconds" value="${thread_pool_keep_alive_seconds}"/>
+        <property name="rejectedExecutionHandler">
+            <bean class="${thread_pool_rejected_execution_handler}"/>
+        </property>
+    </bean>
 
 </beans>
