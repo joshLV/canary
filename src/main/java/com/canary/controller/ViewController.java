@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @since 2015-07-24
  */
 @Controller
-public class PageController {
+public class ViewController {
 
     /**
      * 首页
