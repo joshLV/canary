@@ -34,7 +34,7 @@ public class AdController {
     static {
         try {
             //must start without /
-            File file = ResourceUtils.getFile("classpath:config/develop/canary.properties");
+            File file = ResourceUtils.getFile("classpath:config/develop/application.properties");
             List<String> contentList = FileUtils.readLines(file);
             List<Long> localContent = Lists.transform(contentList, new Function<String, Long>() {
                 @Override
@@ -60,7 +60,7 @@ public class AdController {
 
     static {
         try {
-            File file = ResourceUtils.getFile("classpath:config/develop/canary.properties");
+            File file = ResourceUtils.getFile("classpath:config/develop/application.properties");
             List<String> contentList = FileUtils.readLines(file);
             for (String content : contentList) {
                 localUpgradeSuccessDeal.add(Long.parseLong(content));
