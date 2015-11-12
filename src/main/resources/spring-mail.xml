@@ -25,7 +25,7 @@
         </property>
     </bean>
 
-    <bean id="mailComponent" class="com.sunny.plugin.mail.MailComponent">
+    <bean id="mailComponent" class="com.sunny.plugin.MailPlugin">
         <property name="mailSender" ref="mailSender"/>
     </bean>
 

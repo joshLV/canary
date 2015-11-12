@@ -1,6 +1,6 @@
-<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./ehcache.xsd">
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./ehcache.xsd" updateCheck="false">
 
-    <diskStore path="java.io.tmpdir"/>
+    <diskStore path="/tmp/cache"/>
 
     <defaultCache
             maxElementsInMemory="10000"

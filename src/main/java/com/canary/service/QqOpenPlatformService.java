@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sunny.exception.CustomException;
 import com.sunny.tool.LoggerTool;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,18 +18,20 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class QqOpenPlatformService {
 
-    private static String clientId = "222425";
+    private  String clientId = "222425";
 
-    private static String clientSecret = "1a43297ac2ff252962c80ef2d63b3a7a";
+    @Value("${}")
+    private  String clientSecret = "1a43297ac2ff252962c80ef2d63b3a7a";
 
-    private static String redirectUri = "http://www.mwkong.com";
+    @Value("${}")
+    private  String redirectUri = "http://www.mwkong.com/login/qq";
 
     /**
-     * todo 通过Authorization Code获取用户信息
+     * 通过Authorization Code获取用户信息
      *
      * @param authorizationCode 授权码
      */
-    public static QqUserModel getUserByAuthorizationCode(String authorizationCode) {
+    public  QqUserModel getUserByAuthorizationCode(String authorizationCode) {
         //通过auth code获取access token
         AccessTokenModel accessTokenModel = getAccessToken(authorizationCode);
         String accessToken = accessTokenModel.getAccessToken();
@@ -46,7 +49,7 @@ public class QqOpenPlatformService {
      *
      * @param accessToken 默认有效期三个月
      */
-    public static QqUserModel getUserByAccessToken(String accessToken) {
+    public  QqUserModel getUserByAccessToken(String accessToken) {
         QqUserModel result = new QqUserModel();
         result.setAccessToken(accessToken);
 
@@ -62,7 +65,7 @@ public class QqOpenPlatformService {
         return result;
     }
 
-    private static AccessTokenModel getAccessToken(String authorizationCode) {
+    private  AccessTokenModel getAccessToken(String authorizationCode) {
         AccessTokenModel result = new AccessTokenModel();
 
         //通过authorization code获取access token
@@ -89,7 +92,7 @@ public class QqOpenPlatformService {
         return result;
     }
 
-    private static String getOpenId(String accessToken) {
+    private  String getOpenId(String accessToken) {
         //通过access token 获取openid
         String url = "https://graph.qq.com/oauth2.0/me?access_token={access_token}".replace("{access_token}", accessToken);
         RestTemplate restTemplate = new RestTemplate();
@@ -120,7 +123,7 @@ public class QqOpenPlatformService {
      * @param openId      openid
      * @return 结果
      */
-    private static UserInfo getUserInfo(String accessToken, String openId) {
+    private  UserInfo getUserInfo(String accessToken, String openId) {
         UserInfo result = new UserInfo();
 
         //请求用户信息
@@ -153,10 +156,12 @@ public class QqOpenPlatformService {
     }
 
     public static void main(String[] args) {
-        LoggerTool.info("get qq info by auth token result is {}", JSON.toJSONString(getUserByAuthorizationCode("")));
-        LoggerTool.info("get qq info by access token result is {}", JSON.toJSONString(getUserByAccessToken("")));
+        QqOpenPlatformService service = new QqOpenPlatformService();
+        LoggerTool.info("get qq info by auth token result is {}", JSON.toJSONString(service.getUserByAuthorizationCode("")));
+        LoggerTool.info("get qq info by access token result is {}", JSON.toJSONString(service.getUserByAccessToken("")));
     }
 
+    @SuppressWarnings("unused")
     public static class AccessTokenModel {
         /**
          * 访问令牌
@@ -198,6 +203,7 @@ public class QqOpenPlatformService {
         }
     }
 
+    @SuppressWarnings("unused")
     public static class UserInfo {
 
         private Integer ret;
@@ -310,6 +316,7 @@ public class QqOpenPlatformService {
         }
     }
 
+    @SuppressWarnings("unused")
     public static class QqUserModel {
         /**
          * 访问令牌

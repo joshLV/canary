@@ -49,6 +49,34 @@ public class UserController {
      * todo 用户注册
      */
 
+    /**
+     * qq登录
+     *
+     * @param code    授权码
+     * @param request  请求
+     * @param response 响应
+     * @return 结果
+     */
+    @RequestMapping(value = "/login/qq", method = RequestMethod.POST)
+    @ResponseBody
+    public Result<Object> qqLogin(String code, HttpServletRequest request, HttpServletResponse response) {
+        logger.debug("param code " + JSON.toJSONString(code));
+        Result<Object> result = new Result<Object>();
+        try {
+
+            //return
+            result.setCode(0);
+            result.setMessage("success");
+            result.setObject("");
+            logger.info("user login result" + JSON.toJSONString(result));
+            return result;
+        } catch (Exception e) {
+            result.setCode(-1);
+            result.setMessage("fail");
+            logger.error("user login exception" + e);
+            return result;
+        }
+    }
 
     /**
      * 用户登陆
