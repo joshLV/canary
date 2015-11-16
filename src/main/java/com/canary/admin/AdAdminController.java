@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * 广告管理控制层
  *
@@ -35,7 +37,7 @@ public class AdAdminController {
     @RequestMapping(value = "/admin/ad/update", method = RequestMethod.POST)
     @ResponseBody
     public Result updateAd(WebsiteModel param) {
-        LoggerTool.getLogger().debug("param " + JSON.toJSONString(param));
+        LoggerTool.info("param is {}", JSON.toJSONString(param));
 
         //验证参数
         String[] names = new String[]{WebsiteConstant.TOP_AD, WebsiteConstant.CENTER_AD, WebsiteConstant.BOTTOM_AD, WebsiteConstant.RIGHT_AD};
@@ -46,9 +48,9 @@ public class AdAdminController {
         param.setOperator(UserRequestContext.getUsername());
 
         //修改
-        websiteService.updateAd(param);
+        List<WebsiteModel> object =  websiteService.updateAd(param);
 
-        Result<Object> result = new Result<Object>();
+        Result<Object> result = new Result<Object>(object);
         LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }

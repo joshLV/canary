@@ -61,7 +61,7 @@ public class UserController {
         result.setCode(0);
         result.setMessage("success");
         result.setObject("");
-        LoggerTool.info("user login result" + JSON.toJSONString(result));
+        LoggerTool.info("user login result is {}", JSON.toJSONString(result));
         return result;
     }
 

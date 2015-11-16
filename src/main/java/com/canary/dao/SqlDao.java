@@ -45,7 +45,7 @@ public class SqlDao {
                 ResultSet resultSet = statement.getResultSet();
                 ResultSetMetaData meta = resultSet.getMetaData();
                 int columnCount = meta.getColumnCount();
-                LoggerTool.info("column count : " + columnCount);
+                LoggerTool.info("column count is {}", columnCount);
                 for (int i = 0; i < columnCount; i++) {
                     TableHeadModel column = new TableHeadModel();
                     column.setCode(meta.getColumnName(i + 1));

@@ -25,9 +25,9 @@ public class ExampleJob {
         Date end = new Date();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
-        LoggerTool.info("|EmailJob|execute|running|start|" + dateFormat.format(start));
-        LoggerTool.info("|EmailJob|execute|running|spend|" + (end.getTime() - start.getTime()));
-        LoggerTool.info("|EmailJob|execute|running| end |" + dateFormat.format(end));
+        LoggerTool.info("|EmailJob|execute|running|start| {}", dateFormat.format(start));
+        LoggerTool.info("|EmailJob|execute|running|spend| {}", (end.getTime() - start.getTime()));
+        LoggerTool.info("|EmailJob|execute|running| end | {}", dateFormat.format(end));
     }
 
 }
