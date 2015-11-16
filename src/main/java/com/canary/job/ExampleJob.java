@@ -3,9 +3,9 @@ package com.canary.job;
 import com.sunny.tool.LoggerTool;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * QuartzComponent
@@ -19,15 +19,13 @@ public class ExampleJob {
 
     @Scheduled(cron = "0 */1 * * * ?")
     public void execute() {
-        Date start = new Date();
+        StopWatch  stopWatch = new StopWatch();
+
+        stopWatch.start();
         //do somethings
+        stopWatch.stop();
 
-        Date end = new Date();
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
-        LoggerTool.info("|EmailJob|execute|running|start| {}", dateFormat.format(start));
-        LoggerTool.info("|EmailJob|execute|running|spend| {}", (end.getTime() - start.getTime()));
-        LoggerTool.info("|EmailJob|execute|running| end | {}", dateFormat.format(end));
+        LoggerTool.info("|EmailJob|execute|running|spend| {}",stopWatch.getTotalTimeMillis());
     }
 
 }
