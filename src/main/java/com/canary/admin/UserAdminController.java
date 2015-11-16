@@ -9,6 +9,7 @@ import com.canary.service.UserService;
 import com.sunny.context.UserRequestContext;
 import com.sunny.enums.QuestionEnum;
 import com.sunny.enums.SexEnum;
+import com.sunny.model.PagingResult;
 import com.sunny.model.Result;
 import com.sunny.tool.LoggerTool;
 import com.sunny.validator.ValidatorTool;
@@ -38,36 +39,27 @@ public class UserAdminController {
     @RequestMapping(value = "/admin/user/insert", method = {RequestMethod.POST})
     @ResponseBody
     public Result insert(InsertUserParam param) {
-        LoggerTool.getLogger().debug("param " + JSON.toJSONString(param));
-        Result<Object> result = new Result<Object>();
-        try {
-            //验证参数
-            ValidatorTool.validateString(param.getUsername(), 5, 20, "-1", "参数错误");
-            ValidatorTool.validateString(param.getPassword(), 5, 20, "-1", "参数错误");
-            ValidatorTool.validateStringAmong(param.getQuestion(), new String[]{QuestionEnum.Q1.toDescription(), QuestionEnum.Q2.toDescription(), QuestionEnum.Q3.toDescription(), QuestionEnum.Q4.toDescription(), QuestionEnum.Q5.toDescription(), QuestionEnum.Q6.toDescription()}, "-1", "参数错误");
-            ValidatorTool.validateString(param.getAnswer(), 5, 20, "-1", "参数错误");
-            ValidatorTool.validateStringAmong(param.getRole(), new String[]{RoleEnum.User.toName(), RoleEnum.Admin.toName(), RoleEnum.Super.toName()}, "-1", "参数错误");
-            ValidatorTool.validateString(param.getEmail(), 5, 30, "-1", "参数错误");
-            ValidatorTool.validateString(param.getMobile(), 11, 11, "-1", "参数错误");
+        LoggerTool.info("param is {}", JSON.toJSONString(param));
 
-            //设置用户
-            param.setOperator(UserRequestContext.getUsername());
-            param.setCreator(UserRequestContext.getUsername());
+        //验证参数
+        ValidatorTool.validateString(param.getUsername(), 5, 20, "-1", "参数错误");
+        ValidatorTool.validateString(param.getPassword(), 5, 20, "-1", "参数错误");
+        ValidatorTool.validateStringAmong(param.getQuestion(), new String[]{QuestionEnum.Q1.toDescription(), QuestionEnum.Q2.toDescription(), QuestionEnum.Q3.toDescription(), QuestionEnum.Q4.toDescription(), QuestionEnum.Q5.toDescription(), QuestionEnum.Q6.toDescription()}, "-1", "参数错误");
+        ValidatorTool.validateString(param.getAnswer(), 5, 20, "-1", "参数错误");
+        ValidatorTool.validateStringAmong(param.getRole(), new String[]{RoleEnum.User.toName(), RoleEnum.Admin.toName(), RoleEnum.Super.toName()}, "-1", "参数错误");
+        ValidatorTool.validateString(param.getEmail(), 5, 30, "-1", "参数错误");
+        ValidatorTool.validateString(param.getMobile(), 11, 11, "-1", "参数错误");
 
-            //新增
-            UserModel object = userService.insert(param);
+        //设置用户
+        param.setOperator(UserRequestContext.getUsername());
+        param.setCreator(UserRequestContext.getUsername());
 
-            result.setCode(0);
-            result.setMessage("success");
-            result.setObject(object);
-            LoggerTool.debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.error("exception " + e.getMessage());
-            return result;
-        }
+        //新增
+        UserModel object = userService.insert(param);
+
+        Result<Object> result = new Result<Object>(object);
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
     /**
@@ -77,28 +69,20 @@ public class UserAdminController {
     @RequestMapping(value = "/admin/user/delete", method = {RequestMethod.POST})
     @ResponseBody
     public Result delete(Integer id) {
-        LoggerTool.getLogger().debug("id " + id);
+        LoggerTool.info("id is {}", id);
+
+        //验证参数
+        ValidatorTool.validate(id, "-1", "参数错误");
+
+        //删除
+        UserModel model = new UserModel();
+        model.setId(id);
+        model.setOperator(UserRequestContext.getUsername());
+        userService.delete(model);
+
         Result<Object> result = new Result<Object>();
-        try {
-            //验证参数
-            ValidatorTool.validate(id, "-1", "参数错误");
-
-            //删除
-            UserModel model = new UserModel();
-            model.setId(id);
-            model.setOperator(UserRequestContext.getUsername());
-            userService.delete(model);
-
-            result.setCode(0);
-            result.setMessage("success");
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
     /**
@@ -108,43 +92,35 @@ public class UserAdminController {
     @RequestMapping(value = "/admin/user/update", method = {RequestMethod.POST})
     @ResponseBody
     public Result update(UserModel param) {
-        LoggerTool.getLogger().debug("param " + JSON.toJSONString(param));
-        Result<Object> result = new Result<Object>();
-        try {
-            //验证参数
-            ValidatorTool.validateNumber(param.getId(), "-1", "参数错误");
-            ValidatorTool.validateString(param.getNickname(), 5, 20, "-1", "参数错误");
-            ValidatorTool.validateString(param.getUsername(), 5, 20, "-1", "参数错误");
-            ValidatorTool.validateString(param.getPassword(), 5, 20, "-1", "参数错误");
-            ValidatorTool.validateStringAmong(param.getQuestion(), new String[]{QuestionEnum.Q1.toDescription(), QuestionEnum.Q2.toDescription(), QuestionEnum.Q3.toDescription(), QuestionEnum.Q4.toDescription(), QuestionEnum.Q5.toDescription(), QuestionEnum.Q6.toDescription()}, "-1", "参数错误");
-            ValidatorTool.validateString(param.getAnswer(), 5, 20, "-1", "参数错误");
-            ValidatorTool.validateStringAmong(param.getRole(), new String[]{RoleEnum.User.toName(), RoleEnum.Admin.toName(), RoleEnum.Super.toName()}, "-1", "参数错误");
-            ValidatorTool.validateString(param.getEmail(), 5, 30, "-1", "参数错误");
-            ValidatorTool.validateString(param.getMobile(), 11, 11, "-1", "参数错误");
-            //如果设置了性别，性别必须是性别枚举中四种类型中的一种
-            if (param.getSex() != null) {
-                ValidatorTool.validateStringAmong(param.getSex(), new String[]{SexEnum.Man.toName(), SexEnum.Woman.toName(), SexEnum.Other.toName(), SexEnum.Secret.toName()}, "-1", "参数错误");
-            }
+        LoggerTool.info("param is {}", JSON.toJSONString(param));
+
+        //验证参数
+        ValidatorTool.validateNumber(param.getId(), "-1", "参数错误");
+        ValidatorTool.validateString(param.getNickname(), 5, 20, "-1", "参数错误");
+        ValidatorTool.validateString(param.getUsername(), 5, 20, "-1", "参数错误");
+        ValidatorTool.validateString(param.getPassword(), 5, 20, "-1", "参数错误");
+        ValidatorTool.validateStringAmong(param.getQuestion(), new String[]{QuestionEnum.Q1.toDescription(), QuestionEnum.Q2.toDescription(), QuestionEnum.Q3.toDescription(), QuestionEnum.Q4.toDescription(), QuestionEnum.Q5.toDescription(), QuestionEnum.Q6.toDescription()}, "-1", "参数错误");
+        ValidatorTool.validateString(param.getAnswer(), 5, 20, "-1", "参数错误");
+        ValidatorTool.validateStringAmong(param.getRole(), new String[]{RoleEnum.User.toName(), RoleEnum.Admin.toName(), RoleEnum.Super.toName()}, "-1", "参数错误");
+        ValidatorTool.validateString(param.getEmail(), 5, 30, "-1", "参数错误");
+        ValidatorTool.validateString(param.getMobile(), 11, 11, "-1", "参数错误");
+        //如果设置了性别，性别必须是性别枚举中四种类型中的一种
+        if (param.getSex() != null) {
+            ValidatorTool.validateStringAmong(param.getSex(), new String[]{SexEnum.Man.toName(), SexEnum.Woman.toName(), SexEnum.Other.toName(), SexEnum.Secret.toName()}, "-1", "参数错误");
+        }
 //            ValidatorTool.validateString(param.getQq(), 5, 12, "-1", "参数错误");
 //            ValidatorTool.validateNumber(param.getAge(), "-1", "参数错误");
 //            ValidatorTool.validate(param.getBirthday(), "-1", "参数错误");
 
-            //设置用户
-            param.setOperator(UserRequestContext.getUsername());
+        //设置用户
+        param.setOperator(UserRequestContext.getUsername());
 
-            //修改
-            userService.update(param);
+        //修改
+        userService.update(param);
 
-            result.setCode(0);
-            result.setMessage("success");
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        Result<Object> result = new Result<Object>();
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
     /**
@@ -154,27 +130,19 @@ public class UserAdminController {
     @RequestMapping(value = "/admin/user/select", method = {RequestMethod.GET})
     @ResponseBody
     public Result select(UserModel param) {
-        LoggerTool.getLogger().debug("param " + JSON.toJSONString(param));
-        Result<Object> result = new Result<Object>();
+        LoggerTool.info("param is {}", JSON.toJSONString(param));
+
         ValidatorTool.validateNumber(param.getPage(), 1, Integer.MAX_VALUE, "-1", "参数有误");
-        try {
-            //验证参数
-            ValidatorTool.validateNumber(param.getCount(), 10, 50, "-1", "参数有误");
-            ValidatorTool.validateNumber(param.getPage(), 1, Integer.MAX_VALUE, "-1", "参数有误");
+        //验证参数
+        ValidatorTool.validateNumber(param.getCount(), 10, 50, "-1", "参数有误");
+        ValidatorTool.validateNumber(param.getPage(), 1, Integer.MAX_VALUE, "-1", "参数有误");
 
-            //查询
-            result.setObject(userService.select(param));
+        //查询
+        PagingResult<UserModel> object = userService.select(param);
 
-            result.setCode(0);
-            result.setMessage("success");
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        Result<Object> result = new Result<Object>(object);
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
 }

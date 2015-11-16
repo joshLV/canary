@@ -20,7 +20,7 @@ public class DatabaseService {
     @Autowired
     private SqlDao sqlDao;
 
-    public TableModel executeSql(String sql) throws SQLException {
+    public TableModel executeSql(String sql) {
         return sqlDao.execute(sql);
     }
 

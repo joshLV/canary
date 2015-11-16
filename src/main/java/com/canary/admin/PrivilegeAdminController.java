@@ -32,25 +32,16 @@ public class PrivilegeAdminController {
     @RequestMapping(value = "/admin/privilege/select", method = {RequestMethod.GET})
     @ResponseBody
     public Result selectPrivilege() {
-        LoggerTool.getLogger().debug("no param");
-        Result<Object> result = new Result<Object>();
-        try {
-            //获取管理员权限等级 根据等级设置菜单
-            String role = UserRequestContext.getRole();
+        LoggerTool.info("no param");
 
-            List<String> menus = selectPrivilegeByRole(role);
+        //获取管理员权限等级 根据等级设置菜单
+        String role = UserRequestContext.getRole();
 
-            result.setCode(0);
-            result.setMessage("success");
-            result.setObject(menus);
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        List<String> menus = selectPrivilegeByRole(role);
+
+        Result<Object> result = new Result<Object>(menus);
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
     /**

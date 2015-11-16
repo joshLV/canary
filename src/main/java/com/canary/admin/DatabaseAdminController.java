@@ -2,6 +2,7 @@ package com.canary.admin;
 
 import com.alibaba.fastjson.JSON;
 import com.canary.annotation.Role;
+import com.canary.model.TableModel;
 import com.canary.service.DatabaseService;
 import com.sunny.model.Result;
 import com.sunny.tool.LoggerTool;
@@ -32,25 +33,17 @@ public class DatabaseAdminController {
     @RequestMapping(value = "/admin/database/execute", method = RequestMethod.POST)
     @ResponseBody
     public Result execute(String sql) {
-        LoggerTool.getLogger().debug("sql " + sql);
-        Result<Object> result = new Result<Object>();
-        try {
-            //验证参数
-            ValidatorTool.validateString(sql, 1, Integer.MAX_VALUE, "-1", "参数错误");
+        LoggerTool.info("sql is {}", sql);
 
-            //操作数据库
-            result.setObject(databaseService.executeSql(sql));
+        //验证参数
+        ValidatorTool.validateString(sql, 1, Integer.MAX_VALUE, "-1", "参数错误");
 
-            result.setCode(0);
-            result.setMessage("success");
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        //操作数据库
+        TableModel object = databaseService.executeSql(sql);
+
+        Result<Object> result = new Result<Object>(object);
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
 }

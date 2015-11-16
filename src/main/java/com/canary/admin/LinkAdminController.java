@@ -35,31 +35,23 @@ public class LinkAdminController {
     @RequestMapping(value = "/admin/link/update", method = RequestMethod.POST)
     @ResponseBody
     public Result updateLink(String value) {
-        LoggerTool.getLogger().debug("param " + JSON.toJSONString(value));
-        Result<Object> result = new Result<Object>();
-        try {
-            //验证参数
-            ValidatorTool.validateString(value, 1, 1024, "-1", "参数错误");
+        LoggerTool.info("param is {}", JSON.toJSONString(value));
 
-            //设置用户
-            WebsiteModel param = new WebsiteModel();
-            param.setName(WebsiteConstant.LINK);
-            param.setValue(value);
-            param.setOperator(UserRequestContext.getUsername());
+        //验证参数
+        ValidatorTool.validateString(value, 1, 1024, "-1", "参数错误");
 
-            //修改
-            websiteService.updateLink(param);
+        //设置用户
+        WebsiteModel param = new WebsiteModel();
+        param.setName(WebsiteConstant.LINK);
+        param.setValue(value);
+        param.setOperator(UserRequestContext.getUsername());
 
-            result.setCode(0);
-            result.setMessage("success");
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        //修改
+        WebsiteModel object = websiteService.updateLink(param);
+
+        Result<Object> result = new Result<Object>(object);
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
     /**
@@ -69,22 +61,14 @@ public class LinkAdminController {
     @RequestMapping(value = "/admin/link/select", method = RequestMethod.GET)
     @ResponseBody
     public Result selectLink() {
-        LoggerTool.getLogger().debug("no param");
-        Result<Object> result = new Result<Object>();
-        try {
-            //查询
-            result.setObject(websiteService.selectLink());
+        LoggerTool.info("no param");
 
-            result.setCode(0);
-            result.setMessage("success");
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        //查询
+        WebsiteModel object = websiteService.selectLink();
+
+        Result<Object> result = new Result<Object>(object);
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
 }

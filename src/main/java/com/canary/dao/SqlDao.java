@@ -25,7 +25,7 @@ public class SqlDao {
     @Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 
-    public TableModel execute(String sql) throws SQLException {
+    public TableModel execute(String sql) {
         //处理sql语句
         sql = processSql(sql);
 
@@ -74,10 +74,18 @@ public class SqlDao {
             LoggerTool.error("sql exception,message is {}", e);
         } finally {
             if (statement != null) {
-                statement.close();
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LoggerTool.error("close statement exception,message is {}", e.getMessage());
+                }
             }
             if (connection != null) {
-                connection.close();
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LoggerTool.error("close connection exception,message is {}", e.getMessage());
+                }
             }
         }
         return model;
