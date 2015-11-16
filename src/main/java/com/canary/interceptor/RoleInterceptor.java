@@ -46,19 +46,23 @@ public class RoleInterceptor implements HandlerInterceptor {
         UserHolder userHolder = (UserHolder) request.getAttribute(Constant.USER_HOLDER_KEY);
 
         //判断请求是否是静态资源
-        if (o instanceof DefaultServletHttpRequestHandler) {
+        if (object instanceof DefaultServletHttpRequestHandler) {
             return true;
         }
 
-        //todo 判断是否有权限
+        // 获取角色
         String role;
         if (userHolder == null) {
             role = RoleEnum.Guest.toName();
+        } else {
+            role = userHolder.getRole();
         }
-        if (hasPrivilege(role, request, response, object)) {
 
+        //判断是否有权限
+        Boolean flag = hasPrivilege(role, request, response, object);
+        if (!flag){
+            HttpTool.writeResult(request, response, -1, "error,no privilege", null);
         }
-
 
         return flag;
     }
@@ -95,7 +99,6 @@ public class RoleInterceptor implements HandlerInterceptor {
     public Boolean hasPrivilege(String role, HttpServletRequest request, HttpServletResponse response, Object object) {
         boolean flag = false;
         try {
-
             //方法
             HandlerMethod handlerMethod = (HandlerMethod) object;
             Role annotationRole = handlerMethod.getMethodAnnotation(Role.class);
@@ -107,19 +110,17 @@ public class RoleInterceptor implements HandlerInterceptor {
             //有角色注解验证权限
             else {
                 List<String> annotationRoles = Arrays.asList(annotationRole.role());
-
                 if (annotationRoles.size() > 0 && annotationRoles.contains(role)) {
                     flag = true;
                     LoggerTool.info("have {} privilege", request.getRequestURI());
                 } else {
                     LoggerTool.info("not have {} privilege", request.getRequestURI());
-                    HttpTool.writeResult(request, response, -1, "error,no privilege", null);
                 }
             }
         } catch (Exception e) {
-            LoggerTool.error("exception ", e);
-            HttpTool.writeResult(request, response, -1, "error,no privilege", null);
+            LoggerTool.error("exception,message is {}", e);
         }
+        return flag;
     }
 
     @Override
