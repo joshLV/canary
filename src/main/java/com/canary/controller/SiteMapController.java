@@ -35,7 +35,7 @@ public class SiteMapController {
     @RequestMapping(value = "/sitemap.xml", method = RequestMethod.GET)
     @ResponseBody
     public String map(HttpServletRequest request) {
-        LoggerTool.debug("no param");
+        LoggerTool.info("no param");
         String result;
         List<SiteMapUrlModel> urlset = new ArrayList<SiteMapUrlModel>();
 
@@ -104,7 +104,7 @@ public class SiteMapController {
         urlset.add(copyrightUrl);
 
         result = toXml(urlset);
-        LoggerTool.debug("result is {}", result);
+        LoggerTool.info("result is {}", result);
         return result;
     }
 

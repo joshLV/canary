@@ -26,12 +26,12 @@ public class MenuController {
     @RequestMapping(value = "/menu", method = RequestMethod.GET)
     @ResponseBody
     public Result menu() {
-        LoggerTool.debug("no param");
+        LoggerTool.info("no param");
         Result<Object> result = new Result<Object>();
         result.setCode(0);
         result.setMessage("success");
         result.setObject(menuService.selectWithIndex());
-        LoggerTool.debug("result is {}", JSON.toJSONString(result));
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }
 

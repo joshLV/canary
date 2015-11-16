@@ -13,7 +13,6 @@ import com.sunny.tool.IpTool;
 import com.sunny.tool.LoggerTool;
 import com.sunny.tool.SecurityTool;
 import com.sunny.validator.ValidatorTool;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
@@ -34,8 +33,6 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class UserController {
 
-    private static final Logger logger = Logger.getLogger(UserController.class);
-
     @Autowired
     private UserService userService;
 
@@ -52,7 +49,7 @@ public class UserController {
     /**
      * qq登录
      *
-     * @param code    授权码
+     * @param code     授权码
      * @param request  请求
      * @param response 响应
      * @return 结果
@@ -60,22 +57,14 @@ public class UserController {
     @RequestMapping(value = "/login/qq", method = RequestMethod.POST)
     @ResponseBody
     public Result<Object> qqLogin(String code, HttpServletRequest request, HttpServletResponse response) {
-        logger.debug("param code " + JSON.toJSONString(code));
+        LoggerTool.info("param code is {}", code);
         Result<Object> result = new Result<Object>();
-        try {
-
             //return
             result.setCode(0);
             result.setMessage("success");
             result.setObject("");
-            logger.info("user login result" + JSON.toJSONString(result));
+            LoggerTool.info("user login result" + JSON.toJSONString(result));
             return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            logger.error("user login exception" + e);
-            return result;
-        }
     }
 
     /**
@@ -84,7 +73,7 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public Result<Object> login(UserModel model, HttpServletRequest request, HttpServletResponse response) {
-        logger.debug("param model " + JSON.toJSONString(model));
+        LoggerTool.debug("param is {}", JSON.toJSONString(model));
         Result<Object> result = new Result<Object>();
         try {
             //validate params
@@ -110,12 +99,13 @@ public class UserController {
             result.setCode(0);
             result.setMessage("success");
             result.setObject(userHolder);
-            logger.info("user login result" + JSON.toJSONString(result));
+            //todo
+            LoggerTool.info("user login result is {}" , JSON.toJSONString(result));
             return result;
         } catch (Exception e) {
             result.setCode(-1);
             result.setMessage("fail");
-            logger.error("user login exception" + e);
+            LoggerTool.error("user login exception,message is {}" , e);
             return result;
         } finally {
             //记录登录失败次数和登陆日志
@@ -173,7 +163,7 @@ public class UserController {
             try {
                 ip = IpTool.getIpAddress(request, response);
             } catch (Exception e) {
-                LoggerTool.getLogger().error("获取IP地址异常");
+                LoggerTool.error("获取IP地址异常");
             }
             logModel.setIp(ip);
 
@@ -182,7 +172,7 @@ public class UserController {
             try {
                 address = IpTool.getIpLocation(request, response);
             } catch (Exception e) {
-                LoggerTool.getLogger().error("获取地址异常");
+                LoggerTool.error("获取地址异常");
             }
             logModel.setAddress(address);
 
@@ -204,22 +194,15 @@ public class UserController {
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     @ResponseBody
     public Result<Object> logout(HttpServletRequest request, HttpServletResponse response) {
-        logger.debug("no param");
+        LoggerTool.info("no param");
         Result<Object> result = new Result<Object>();
-        try {
-            //设置cookie
-            CookieTool.setCookie(request, response, 0, CanaryConstant.COOKIE_NAME, null);
+        //设置cookie
+        CookieTool.setCookie(request, response, 0, CanaryConstant.COOKIE_NAME, null);
 
-            result.setCode(0);
-            result.setMessage("success");
-            logger.info("user logout result" + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            logger.error("user logout exception" + e);
-            return result;
-        }
+        result.setCode(0);
+        result.setMessage("success");
+        LoggerTool.info("user logout result is {}" , JSON.toJSONString(result));
+        return result;
     }
 
 }

@@ -31,8 +31,8 @@ public class ArticleController {
     @RequestMapping(value = "/articles/{menu}/{page}", method = RequestMethod.GET)
     @ResponseBody
     public Result selectArticleByMenuId(@PathVariable("menu") Integer menu, @PathVariable("page") Integer page) {
-        LoggerTool.debug("menuId is {}", menu);
-        LoggerTool.debug("page is {}", page);
+        LoggerTool.info("menuId is {}", menu);
+        LoggerTool.info("page is {}", page);
         Result<Object> result = new Result<Object>();
         //验证参数
         ValidatorTool.validate(menu, "-1", "参数有误");
@@ -51,7 +51,7 @@ public class ArticleController {
 
         result.setCode(0);
         result.setMessage("success");
-        LoggerTool.debug("result is {}", JSON.toJSONString(result));
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
 
     }
@@ -62,12 +62,12 @@ public class ArticleController {
     @RequestMapping(value = "/article/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Result article(@PathVariable Integer id) {
-        LoggerTool.debug("id is {}", id);
+        LoggerTool.info("id is {}", id);
         Result<Object> result = new Result<Object>();
         result.setCode(0);
         result.setMessage("success");
         result.setObject(articleService.selectById(id));
-        LoggerTool.debug("result is {}", JSON.toJSONString(result));
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }
 
@@ -77,7 +77,7 @@ public class ArticleController {
     @RequestMapping(value = "/new/{page}", method = RequestMethod.GET)
     @ResponseBody
     public Result newArticles(@PathVariable("page") Integer page) {
-        LoggerTool.debug("page is {}", page);
+        LoggerTool.info("page is {}", page);
         Result<Object> result = new Result<Object>();
         //验证参数
         ValidatorTool.validateNumber(page, 0, Integer.MAX_VALUE, "-1", "参数有误");
@@ -91,7 +91,7 @@ public class ArticleController {
         result.setObject(articleService.selectArticleModelList(param));
         result.setCode(0);
         result.setMessage("success");
-        LoggerTool.debug("result is {}", JSON.toJSONString(result));
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }
 
@@ -101,7 +101,7 @@ public class ArticleController {
     @RequestMapping(value = "/hot", method = RequestMethod.GET)
     @ResponseBody
     public Result hot() {
-        LoggerTool.debug("no param");
+        LoggerTool.info("no param");
         Result<Object> result = new Result<Object>();
         //查询数据
         ArticleModel param = new ArticleModel();
@@ -110,7 +110,7 @@ public class ArticleController {
         result.setObject(articleService.selectHot(param));
         result.setCode(0);
         result.setMessage("success");
-        LoggerTool.debug("result is {}", JSON.toJSONString(result));
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }
 
@@ -121,13 +121,13 @@ public class ArticleController {
     @RequestMapping(value = "/user/up", method = RequestMethod.POST)
     @ResponseBody
     public Result up(Integer id) {
-        LoggerTool.debug("id is {}", id);
+        LoggerTool.info("id is {}", id);
         Result<Object> result = new Result<Object>();
         //查询数据
         result.setObject("");
         result.setCode(0);
         result.setMessage("success");
-        LoggerTool.debug("result is {}", JSON.toJSONString(result));
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
 
     }

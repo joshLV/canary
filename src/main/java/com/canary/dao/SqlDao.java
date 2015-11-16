@@ -2,7 +2,7 @@ package com.canary.dao;
 
 import com.canary.model.TableHeadModel;
 import com.canary.model.TableModel;
-import org.apache.log4j.Logger;
+import com.sunny.tool.LoggerTool;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.SqlSessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +21,6 @@ import java.util.List;
  */
 @Repository
 public class SqlDao {
-
-    public static final Logger logger = Logger.getLogger(SqlDao.class);
 
     @Autowired
     private SqlSessionTemplate sqlSessionTemplate;
@@ -47,7 +45,7 @@ public class SqlDao {
                 ResultSet resultSet = statement.getResultSet();
                 ResultSetMetaData meta = resultSet.getMetaData();
                 int columnCount = meta.getColumnCount();
-                logger.info("column count : " + columnCount);
+                LoggerTool.info("column count : " + columnCount);
                 for (int i = 0; i < columnCount; i++) {
                     TableHeadModel column = new TableHeadModel();
                     column.setCode(meta.getColumnName(i + 1));
@@ -73,7 +71,7 @@ public class SqlDao {
                 body.add(row);
             }
         } catch (SQLException e) {
-            logger.error("error", e);
+            LoggerTool.error("sql exception,message is {}", e);
         } finally {
             if (statement != null) {
                 statement.close();
@@ -85,8 +83,8 @@ public class SqlDao {
         return model;
     }
 
-    public static String processSql(String sql){
-        if (sql != null && sql.startsWith("select") && !sql.contains("limit")){
+    public static String processSql(String sql) {
+        if (sql != null && sql.startsWith("select") && !sql.contains("limit")) {
             sql = sql + " limit 1000";
         }
         return sql;

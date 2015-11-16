@@ -29,12 +29,12 @@ public class LinkController {
     @RequestMapping(value = "/link", method = RequestMethod.GET)
     @ResponseBody
     public Result link() {
-        LoggerTool.debug("no param");
+        LoggerTool.info("no param");
         Result<Object> result = new Result<Object>();
         result.setCode(0);
         result.setMessage("success");
         result.setObject(websiteService.selectLink());
-        LoggerTool.debug("result is {}", JSON.toJSONString(result));
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }
 
