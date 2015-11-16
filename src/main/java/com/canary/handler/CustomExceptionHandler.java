@@ -2,6 +2,7 @@ package com.canary.handler;
 
 import com.sunny.exception.CustomException;
 import com.sunny.tool.HttpTool;
+import com.sunny.tool.LoggerTool;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,8 +25,10 @@ public class CustomExceptionHandler implements HandlerExceptionResolver {
 
         if (ex instanceof CustomException) {
             CustomException customException = (CustomException) ex;
+            LoggerTool.error("exception,message is {}" + ex.getMessage());
             HttpTool.writeResult(request, response, customException.getCode(), customException.getMessage(), null);
         } else {
+            LoggerTool.error("exception,message is {}" + ex.getMessage());
             HttpTool.writeResult(request, response, -1, "system exception", null);
         }
 

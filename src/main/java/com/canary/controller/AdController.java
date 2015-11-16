@@ -31,48 +31,6 @@ public class AdController {
     @Autowired
     private WebsiteService websiteService;
 
-    static {
-        try {
-            //must start without /
-            File file = ResourceUtils.getFile("classpath:config/develop/application.properties");
-            List<String> contentList = FileUtils.readLines(file);
-            List<Long> localContent = Lists.transform(contentList, new Function<String, Long>() {
-                @Override
-                public Long apply(String input) {
-                    return Long.parseLong(input);
-                }
-            });
-
-            //在读取list内容的时候才会报异常，转换的时候和读取长度的时候不报异常。
-//            if (localContent.size() > 0) {
-//                System.out.println("load file local_deal_id.txt success.deal size is " + localContent.size());
-//                for (Long content : localContent){
-//                    System.out.println(content);
-//                }
-//            }
-
-        } catch (IOException e) {
-            System.out.println("can not load file local_deal_id.txt" + e.getMessage());
-        }
-    }
-
-    private static List<Long> localUpgradeSuccessDeal = new ArrayList<Long>();
-
-    static {
-        try {
-            File file = ResourceUtils.getFile("classpath:config/develop/application.properties");
-            List<String> contentList = FileUtils.readLines(file);
-            for (String content : contentList) {
-                localUpgradeSuccessDeal.add(Long.parseLong(content));
-            }
-            if (localUpgradeSuccessDeal.size() > 0) {
-                System.out.println("load file local_deal_id.txt success.deal size is " + localUpgradeSuccessDeal.size());
-            }
-        } catch (Exception e) {
-            System.out.println("can not load file local_deal_id.txt" + e.getMessage());
-        }
-    }
-
     /**
      * 查询启用的广告
      */
@@ -81,18 +39,11 @@ public class AdController {
     public Result ad() {
         LoggerTool.getLogger().debug("no param");
         Result<Object> result = new Result<Object>();
-        try {
-            result.setCode(0);
-            result.setMessage("success");
-            result.setObject(websiteService.selectAd());
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        result.setCode(0);
+        result.setMessage("success");
+        result.setObject(websiteService.selectAd());
+        LoggerTool.debug("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
 }
