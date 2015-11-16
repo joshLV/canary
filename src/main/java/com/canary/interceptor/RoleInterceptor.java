@@ -59,8 +59,8 @@ public class RoleInterceptor implements HandlerInterceptor {
         }
 
         //判断是否有权限
-        Boolean flag = hasPrivilege(role, request, response, object);
-        if (!flag){
+        Boolean flag = hasPrivilege(role, request, object);
+        if (!flag) {
             HttpTool.writeResult(request, response, -1, "error,no privilege", null);
         }
 
@@ -96,7 +96,7 @@ public class RoleInterceptor implements HandlerInterceptor {
         }
     }
 
-    public Boolean hasPrivilege(String role, HttpServletRequest request, HttpServletResponse response, Object object) {
+    public Boolean hasPrivilege(String role, HttpServletRequest request, Object object) {
         boolean flag = false;
         try {
             //方法
