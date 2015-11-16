@@ -37,35 +37,26 @@ public class CacheAdminController {
     @RequestMapping(value = "/admin/cache/select", method = RequestMethod.GET)
     @ResponseBody
     public Result select() {
-        Result<Object> result = new Result<Object>();
-        try {
-            result.setCode(0);
-            result.setMessage("success");
-            HashMap<Object, Object> object = new HashMap<Object, Object>();
+        HashMap<Object, Object> object = new HashMap<Object, Object>();
 
-            //获取缓存全部数据
-            Cache cache = cacheManager.getCache("customCache");
-            Object c = cache.getNativeCache();
-            if (c instanceof net.sf.ehcache.Cache) {
-                net.sf.ehcache.Cache ehcache = (net.sf.ehcache.Cache) c;
-                List<?> keys = ehcache.getKeys();
-                for (Object key : keys) {
-                    Element element = ehcache.get(key);
-                    if (element != null) {
-                        Object value = element.getObjectValue();
-                        object.put(key, value);
-                    }
+        //获取缓存全部数据
+        Cache cache = cacheManager.getCache("customCache");
+        Object c = cache.getNativeCache();
+        if (c instanceof net.sf.ehcache.Cache) {
+            net.sf.ehcache.Cache ehcache = (net.sf.ehcache.Cache) c;
+            List<?> keys = ehcache.getKeys();
+            for (Object key : keys) {
+                Element element = ehcache.get(key);
+                if (element != null) {
+                    Object value = element.getObjectValue();
+                    object.put(key, value);
                 }
             }
-            result.setObject(object);
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
         }
+
+        Result<Object> result = new Result<Object>(object);
+        LoggerTool.info("result is{}", JSON.toJSONString(result));
+        return result;
     }
 
     /**
@@ -74,25 +65,17 @@ public class CacheAdminController {
     @RequestMapping(value = "/admin/cache/clear", method = RequestMethod.POST)
     @ResponseBody
     public Result clear(String key) {
+
+        //验证参数
+        ValidatorTool.validateString(key, 1, Integer.MAX_VALUE, "-1", "param exception.");
+
+        //清除
+        Cache cache = cacheManager.getCache("customCache");
+        cache.evict(key);
+
         Result<Object> result = new Result<Object>();
-        try {
-            //验证参数
-            ValidatorTool.validateString(key, 1, Integer.MAX_VALUE, "-1", "param exception.");
-
-            result.setCode(0);
-            result.setMessage("success");
-
-            //清除
-            Cache cache = cacheManager.getCache("customCache");
-            cache.evict(key);
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
 }

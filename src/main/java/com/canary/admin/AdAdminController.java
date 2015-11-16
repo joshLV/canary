@@ -36,29 +36,21 @@ public class AdAdminController {
     @ResponseBody
     public Result updateAd(WebsiteModel param) {
         LoggerTool.getLogger().debug("param " + JSON.toJSONString(param));
+
+        //验证参数
+        String[] names = new String[]{WebsiteConstant.TOP_AD, WebsiteConstant.CENTER_AD, WebsiteConstant.BOTTOM_AD, WebsiteConstant.RIGHT_AD};
+        ValidatorTool.validateStringAmong(param.getName(), names, "-1", "参数错误");
+        ValidatorTool.validateString(param.getValue(), 1, 1024, "-1", "参数错误");
+
+        //设置用户
+        param.setOperator(UserRequestContext.getUsername());
+
+        //修改
+        websiteService.updateAd(param);
+
         Result<Object> result = new Result<Object>();
-        try {
-            //验证参数
-            String[] names = new String[]{WebsiteConstant.TOP_AD, WebsiteConstant.CENTER_AD, WebsiteConstant.BOTTOM_AD, WebsiteConstant.RIGHT_AD};
-            ValidatorTool.validateStringAmong(param.getName(), names, "-1", "参数错误");
-            ValidatorTool.validateString(param.getValue(), 1, 1024, "-1", "参数错误");
-
-            //设置用户
-            param.setOperator(UserRequestContext.getUsername());
-
-            //修改
-            websiteService.updateAd(param);
-
-            result.setCode(0);
-            result.setMessage("success");
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception " + e.getMessage());
-            return result;
-        }
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
     /**
@@ -68,20 +60,10 @@ public class AdAdminController {
     @RequestMapping(value = "/admin/ad/select", method = RequestMethod.GET)
     @ResponseBody
     public Result link() {
-        LoggerTool.getLogger().debug("no param");
-        Result<Object> result = new Result<Object>();
-        try {
-            result.setCode(0);
-            result.setMessage("success");
-            result.setObject(websiteService.selectAd());
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        LoggerTool.info("no param");
+        Result<Object> result = new Result<Object>(websiteService.selectAd());
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
 }

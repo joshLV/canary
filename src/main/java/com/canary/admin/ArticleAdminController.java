@@ -3,10 +3,12 @@ package com.canary.admin;
 import com.alibaba.fastjson.JSON;
 import com.canary.annotation.Role;
 import com.canary.model.ArticleModel;
+import com.canary.model.ArticleRelationModel;
 import com.canary.param.ArticleParam;
 import com.canary.service.ArticleService;
 import com.sunny.context.UserRequestContext;
 import com.sunny.exception.CustomException;
+import com.sunny.model.PagingResult;
 import com.sunny.model.Result;
 import com.sunny.tool.LoggerTool;
 import com.sunny.tool.StringTool;
@@ -48,38 +50,30 @@ public class ArticleAdminController {
     @RequestMapping(value = "/admin/article/insert", method = RequestMethod.POST)
     @ResponseBody
     public Result<Object> insert(ArticleParam param) {
-        LoggerTool.getLogger().debug("param " + JSON.toJSONString(param));
-        Result<Object> result = new Result<Object>();
-        try {
-            //设置用户
-            param.setOperator(UserRequestContext.getUsername());
-            param.setCreator(UserRequestContext.getUsername());
+        LoggerTool.info("param is {}", JSON.toJSONString(param));
 
-            // 验证参数
-            ValidatorTool.validateNotNull(param, "-1", "参数有误");
-            ValidatorTool.validateNotNull(param.getMenuId(), "-1", "参数有误");
-            ValidatorTool.validateString(param.getTags(), 0, Integer.MAX_VALUE, "-1", "参数有误");
-            ValidatorTool.validateString(param.getTitle(), 0, Integer.MAX_VALUE, "-1", "参数有误");
-            ValidatorTool.validateString(param.getContent(), 0, Integer.MAX_VALUE, "-1", "参数有误");
-            ValidatorTool.validateString(param.getAuthor(), 0, Integer.MAX_VALUE, "-1", "参数有误");
-            ValidatorTool.validateNumber(param.getRank(), "-1", "参数有误");
-            //来源名称和来源链接可以为空
+        //设置用户
+        param.setOperator(UserRequestContext.getUsername());
+        param.setCreator(UserRequestContext.getUsername());
+
+        // 验证参数
+        ValidatorTool.validateNotNull(param, "-1", "参数有误");
+        ValidatorTool.validateNotNull(param.getMenuId(), "-1", "参数有误");
+        ValidatorTool.validateString(param.getTags(), 0, Integer.MAX_VALUE, "-1", "参数有误");
+        ValidatorTool.validateString(param.getTitle(), 0, Integer.MAX_VALUE, "-1", "参数有误");
+        ValidatorTool.validateString(param.getContent(), 0, Integer.MAX_VALUE, "-1", "参数有误");
+        ValidatorTool.validateString(param.getAuthor(), 0, Integer.MAX_VALUE, "-1", "参数有误");
+        ValidatorTool.validateNumber(param.getRank(), "-1", "参数有误");
+        //来源名称和来源链接可以为空
 //            ValidatorTool.validateString(param.getSourceName(),0,Integer.MAX_VALUE,"-1","参数有误");
 //            ValidatorTool.validateString(param.getSourceUrl(), 0, Integer.MAX_VALUE, "-1", "参数有误");
 
-            //新增文章 返回文章主键
-            result.setObject(articleService.insert(param));
+        //新增文章 返回文章主键
+        Integer object = articleService.insert(param);
 
-            result.setCode(0);
-            result.setMessage("success");
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        Result<Object> result = new Result<Object>(object);
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
     /**
@@ -89,29 +83,21 @@ public class ArticleAdminController {
     @RequestMapping(value = "/admin/article/delete", method = RequestMethod.POST)
     @ResponseBody
     public Result deleteArticle(ArticleParam param) {
-        LoggerTool.getLogger().debug("param " + JSON.toJSONString(param));
+        LoggerTool.info("param is {}", JSON.toJSONString(param));
+
+        //设置用户
+        param.setOperator(UserRequestContext.getUsername());
+
+        //验证参数
+        ValidatorTool.validate(param, "-1", "参数错误");
+        ValidatorTool.validate(param.getId(), "-1", "参数错误");
+
+        //删除
+        articleService.delete(param);
+
         Result<Object> result = new Result<Object>();
-        try {
-            //设置用户
-            param.setOperator(UserRequestContext.getUsername());
-
-            //验证参数
-            ValidatorTool.validate(param, "-1", "参数错误");
-            ValidatorTool.validate(param.getId(), "-1", "参数错误");
-
-            //删除
-            articleService.delete(param);
-
-            result.setCode(0);
-            result.setMessage("success");
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
     /**
@@ -121,35 +107,27 @@ public class ArticleAdminController {
     @RequestMapping(value = "/admin/article/update", method = RequestMethod.POST)
     @ResponseBody
     public Result updateArticle(ArticleParam param) {
-        LoggerTool.getLogger().debug("param " + JSON.toJSONString(param));
+        LoggerTool.info("param is {}", JSON.toJSONString(param));
+
+        //设置用户
+        param.setOperator(UserRequestContext.getUsername());
+
+        // 验证参数
+        ValidatorTool.validateNotNull(param, "-1", "参数有误");
+        ValidatorTool.validate(param.getId(), "-1", "参数错误");
+        ValidatorTool.validateNotNull(param.getMenuId(), "-1", "参数有误");
+        ValidatorTool.validateString(param.getTags(), 0, Integer.MAX_VALUE, "-1", "参数有误");
+        ValidatorTool.validateString(param.getTitle(), 0, Integer.MAX_VALUE, "-1", "参数有误");
+        ValidatorTool.validateString(param.getContent(), 0, Integer.MAX_VALUE, "-1", "参数有误");
+        ValidatorTool.validateString(param.getAuthor(), 0, Integer.MAX_VALUE, "-1", "参数有误");
+        ValidatorTool.validateNumber(param.getRank(), "-1", "参数有误");
+
+        //修改
+        articleService.update(param);
+
         Result<Object> result = new Result<Object>();
-        try {
-            //设置用户
-            param.setOperator(UserRequestContext.getUsername());
-
-            // 验证参数
-            ValidatorTool.validateNotNull(param, "-1", "参数有误");
-            ValidatorTool.validate(param.getId(), "-1", "参数错误");
-            ValidatorTool.validateNotNull(param.getMenuId(), "-1", "参数有误");
-            ValidatorTool.validateString(param.getTags(), 0, Integer.MAX_VALUE, "-1", "参数有误");
-            ValidatorTool.validateString(param.getTitle(), 0, Integer.MAX_VALUE, "-1", "参数有误");
-            ValidatorTool.validateString(param.getContent(), 0, Integer.MAX_VALUE, "-1", "参数有误");
-            ValidatorTool.validateString(param.getAuthor(), 0, Integer.MAX_VALUE, "-1", "参数有误");
-            ValidatorTool.validateNumber(param.getRank(), "-1", "参数有误");
-
-            //修改
-            articleService.update(param);
-
-            result.setCode(0);
-            result.setMessage("success");
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
     /**
@@ -159,32 +137,24 @@ public class ArticleAdminController {
     @RequestMapping(value = "/admin/articles/select", method = RequestMethod.GET)
     @ResponseBody
     public Result selectArticleList(ArticleParam param) {
-        LoggerTool.getLogger().debug("param " + JSON.toJSONString(param));
-        Result<Object> result = new Result<Object>();
-        try {
-            // 验证参数
-            ValidatorTool.validate(param.getMenuId(), "-1", "参数有误");
-            ValidatorTool.validateNumber(param.getCount(), 10, 50, "-1", "参数有误");
-            ValidatorTool.validateNumber(param.getPage(), 1, Integer.MAX_VALUE, "-1", "参数有误");
+        LoggerTool.info("param is {}", JSON.toJSONString(param));
 
-            //构造查询参数
-            ArticleModel model = new ArticleModel();
-            model.setMenuId(param.getMenuId());
-            model.setPage(param.getPage());
-            model.setCount(param.getCount());
-            model.setTitle(param.getTitle());
-            result.setObject(articleService.select(model));
+        // 验证参数
+        ValidatorTool.validate(param.getMenuId(), "-1", "参数有误");
+        ValidatorTool.validateNumber(param.getCount(), 10, 50, "-1", "参数有误");
+        ValidatorTool.validateNumber(param.getPage(), 1, Integer.MAX_VALUE, "-1", "参数有误");
 
-            result.setCode(0);
-            result.setMessage("success");
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        //构造查询参数
+        ArticleModel model = new ArticleModel();
+        model.setMenuId(param.getMenuId());
+        model.setPage(param.getPage());
+        model.setCount(param.getCount());
+        model.setTitle(param.getTitle());
+        PagingResult<ArticleRelationModel> object = articleService.select(model);
+
+        Result<Object> result = new Result<Object>(object);
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
     /**
@@ -194,20 +164,13 @@ public class ArticleAdminController {
     @RequestMapping(value = "/admin/article/select", method = RequestMethod.POST)
     @ResponseBody
     public Result selectArticle(@RequestParam Integer id) {
-        LoggerTool.getLogger().debug("id " + id);
-        Result<Object> result = new Result<Object>();
-        try {
-            result.setCode(0);
-            result.setMessage("success");
-            result.setObject(articleService.selectById(id));
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        LoggerTool.info("id is {}", id);
+
+        ArticleRelationModel object = articleService.selectById(id);
+
+        Result<Object> result = new Result<Object>(object);
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
     /**
@@ -217,25 +180,18 @@ public class ArticleAdminController {
     @RequestMapping(value = "/admin/image/upload", method = RequestMethod.POST)
     @ResponseBody
     public Result imageUpload(@RequestParam("files") CommonsMultipartFile[] files, HttpServletRequest request) {
-        Result<Object> result = new Result<Object>();
-
         List<String> names = new ArrayList<String>();
-
         for (CommonsMultipartFile file : files) {
             //check if the file is empty
             if (file.isEmpty()) {
-                result.setCode(-1);
-                result.setMessage("file is empty.");
-                return result;
+                return new Result<Object>(-1, "file is empty.");
             }
 
             // check the file type
             String filename = file.getOriginalFilename();
             String fileType = getImageFileType(filename);
             if (fileType == null || fileType.length() == 0) {
-                result.setCode(-1);
-                result.setMessage("file type is error.");
-                return result;
+                return new Result<Object>(-1, "file type is error.");
             }
 
             //generate the new file name
@@ -262,7 +218,7 @@ public class ArticleAdminController {
             names.add(relativeFilename);
         }
 
-        result.setObject(names);
+        Result<Object> result = new Result<Object>(names);
         return result;
     }
 
