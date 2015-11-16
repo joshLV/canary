@@ -1,4 +1,4 @@
-package com.canary.interceptor;
+package com.canary.aop;
 
 import com.alibaba.fastjson.JSON;
 import com.canary.annotation.Role;
@@ -12,11 +12,13 @@ import com.sunny.tool.HttpTool;
 import com.sunny.tool.LoggerTool;
 import com.sunny.tool.SecurityTool;
 import com.sunny.validator.ValidatorTool;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,43 +26,51 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 权限拦截器
+ * PrivilegeAop
  *
  * @author sunny
  * @version 1.0.0
- * @since 2015-05-08
+ * @since 2015-11-16
  */
-public class RoleInterceptor implements HandlerInterceptor {
+@Aspect
+@Component
+public class PrivilegeAop {
 
     @Autowired
     private UserService userService;
 
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
-        LoggerTool.info("uri is {}", request.getRequestURI());
+    @Around("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
+    public Object around(ProceedingJoinPoint point) throws Throwable {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
 
-        // 设置cookie
-        setCookie(request, response);
-
-        // 获取当前用户
+        //获取当前用户
         UserHolder userHolder = (UserHolder) request.getAttribute(Constant.USER_HOLDER_KEY);
 
-        //判断请求是否是静态资源
-        if (o instanceof DefaultServletHttpRequestHandler) {
-            return true;
-        }
-
-        //todo 判断是否有权限
-        String role;
+        //如果用户为空，重新设置cookie，并获取当前用户
         if (userHolder == null) {
-            role = RoleEnum.Guest.toName();
-        }
-        if (hasPrivilege(role, request, response, object)) {
-
+            setCookie(request, response);
+            userHolder = (UserHolder) request.getAttribute(Constant.USER_HOLDER_KEY);
         }
 
+        //获取用户角色
+        String role = RoleEnum.Guest.toName();
+        if (userHolder != null ){
+            role = userHolder.getRole();
+        }
 
-        return flag;
+        //判断是否有权限
+        if (hasPrivilege(role,request,response)){
+            return point.proceed();
+        }else{
+            HttpTool.writeResult(request, response, -1, "error,no privilege", null);
+            return null;
+        }
+
+//        System.out.println(point.getArgs());
+//        System.out.println(point.getKind());
+//        System.out.println(point.getStaticPart());
+//        System.out.println();
     }
 
     /**
@@ -68,8 +78,10 @@ public class RoleInterceptor implements HandlerInterceptor {
      *
      * @param request  请求
      * @param response 响应
+     * @return 结果
      */
-    public void setCookie(HttpServletRequest request, HttpServletResponse response) {
+    public UserHolder setCookie(HttpServletRequest request, HttpServletResponse response) {
+        UserHolder userHolder;
         try {
             //从cookie中获取用户主键和用户名
             Integer id = Integer.parseInt(CookieTool.getCookie(request, response, "id"));
@@ -84,21 +96,20 @@ public class RoleInterceptor implements HandlerInterceptor {
             String cookieValue = SecurityTool.decodeAes(CookieTool.getCookie(request, response, CanaryConstant.COOKIE_NAME), sign);
             LoggerTool.info("cookie value is {}", cookieValue);
 
-            UserHolder userHolder = JSON.parseObject(cookieValue, UserHolder.class);
+            userHolder = JSON.parseObject(cookieValue, UserHolder.class);
             request.setAttribute(Constant.USER_HOLDER_KEY, userHolder);
             LoggerTool.info("userHolder is {}", JSON.toJSONString(userHolder));
+            return userHolder;
         } catch (Exception e) {
             LoggerTool.info("user is not login");
+            return null;
         }
     }
 
-    public Boolean hasPrivilege(String role, HttpServletRequest request, HttpServletResponse response, Object object) {
+    public Boolean hasPrivilege(String role, HttpServletRequest request, HttpServletResponse response) {
         boolean flag = false;
         try {
-
-            //方法
-            HandlerMethod handlerMethod = (HandlerMethod) object;
-            Role annotationRole = handlerMethod.getMethodAnnotation(Role.class);
+            Role annotationRole = null;
 
             //没有角色注解不验证权限
             if (annotationRole == null) {
@@ -113,23 +124,11 @@ public class RoleInterceptor implements HandlerInterceptor {
                     LoggerTool.info("have {} privilege", request.getRequestURI());
                 } else {
                     LoggerTool.info("not have {} privilege", request.getRequestURI());
-                    HttpTool.writeResult(request, response, -1, "error,no privilege", null);
                 }
             }
         } catch (Exception e) {
-            LoggerTool.error("exception ", e);
-            HttpTool.writeResult(request, response, -1, "error,no privilege", null);
+            LoggerTool.error("exception ,message is {}", e);
         }
+        return flag;
     }
-
-    @Override
-    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-
-    }
-
-    @Override
-    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
-
-    }
-
 }
