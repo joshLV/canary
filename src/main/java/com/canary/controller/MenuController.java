@@ -26,20 +26,13 @@ public class MenuController {
     @RequestMapping(value = "/menu", method = RequestMethod.GET)
     @ResponseBody
     public Result menu() {
-        LoggerTool.getLogger().debug("no param");
+        LoggerTool.debug("no param");
         Result<Object> result = new Result<Object>();
-        try {
-            result.setCode(0);
-            result.setMessage("success");
-            result.setObject(menuService.selectWithIndex());
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        result.setCode(0);
+        result.setMessage("success");
+        result.setObject(menuService.selectWithIndex());
+        LoggerTool.debug("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
 }

@@ -35,82 +35,77 @@ public class SiteMapController {
     @RequestMapping(value = "/sitemap.xml", method = RequestMethod.GET)
     @ResponseBody
     public String map(HttpServletRequest request) {
-        LoggerTool.getLogger().debug("no param");
-        String result = "";
-        try {
-            List<SiteMapUrlModel> urlset = new ArrayList<SiteMapUrlModel>();
+        LoggerTool.debug("no param");
+        String result;
+        List<SiteMapUrlModel> urlset = new ArrayList<SiteMapUrlModel>();
 
-            //获取域名和端口
-            String scheme = request.getScheme();
-            String serverName = request.getServerName();
-            int serverPort = request.getServerPort();
-            String domain = scheme + "://" +  serverName;
-            if (serverPort != 80) {
-                domain = domain + ":" + serverPort;
-            }
-
-
-            //首页
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            SiteMapUrlModel indexUrl = new SiteMapUrlModel();
-            indexUrl.setLoc(domain + "/index.html");
-            indexUrl.setLastmod(simpleDateFormat.format(new Date()));
-            indexUrl.setChangefreq("daily");
-            indexUrl.setPriority("0.8");
-            urlset.add(indexUrl);
-
-            //文章列表页
-            List<MenuModel> menus = menuService.select();
-            if (menus != null) {
-                for (MenuModel model : menus) {
-                    SiteMapUrlModel menuUrl = new SiteMapUrlModel();
-                    menuUrl.setLoc(domain + "/menu/" + model.getId() + ".html");
-                    menuUrl.setLastmod(simpleDateFormat.format(new Date()));
-                    menuUrl.setChangefreq("daily");
-                    menuUrl.setPriority("0.8");
-                    urlset.add(menuUrl);
-                }
-            }
-
-            //关于我们
-            SiteMapUrlModel aboutUrl = new SiteMapUrlModel();
-            aboutUrl.setLoc(domain + "/about.html");
-            aboutUrl.setLastmod(simpleDateFormat.format(new Date()));
-            aboutUrl.setChangefreq("daily");
-            aboutUrl.setPriority("0.8");
-            urlset.add(aboutUrl);
-
-            //联系我们
-            SiteMapUrlModel contactUrl = new SiteMapUrlModel();
-            contactUrl.setLoc(domain + "/contact.html");
-            contactUrl.setLastmod(simpleDateFormat.format(new Date()));
-            contactUrl.setChangefreq("daily");
-            contactUrl.setPriority("0.8");
-            urlset.add(contactUrl);
-
-            //投稿
-            SiteMapUrlModel contributionUrl = new SiteMapUrlModel();
-            contributionUrl.setLoc(domain + "/contribution.html");
-            contributionUrl.setLastmod(simpleDateFormat.format(new Date()));
-            contributionUrl.setChangefreq("daily");
-            contributionUrl.setPriority("0.8");
-            urlset.add(contributionUrl);
-
-            //版权声明
-            SiteMapUrlModel copyrightUrl = new SiteMapUrlModel();
-            copyrightUrl.setLoc(domain + "/copyright.html");
-            copyrightUrl.setLastmod(simpleDateFormat.format(new Date()));
-            copyrightUrl.setChangefreq("daily");
-            copyrightUrl.setPriority("0.8");
-            urlset.add(copyrightUrl);
-
-            result = toXml(urlset);
-            LoggerTool.getLogger().debug("result " + result);
-            return result;
-        } catch (Exception e) {
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
+        //获取域名和端口
+        String scheme = request.getScheme();
+        String serverName = request.getServerName();
+        int serverPort = request.getServerPort();
+        String domain = scheme + "://" + serverName;
+        if (serverPort != 80) {
+            domain = domain + ":" + serverPort;
         }
+
+
+        //首页
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SiteMapUrlModel indexUrl = new SiteMapUrlModel();
+        indexUrl.setLoc(domain + "/index.html");
+        indexUrl.setLastmod(simpleDateFormat.format(new Date()));
+        indexUrl.setChangefreq("daily");
+        indexUrl.setPriority("0.8");
+        urlset.add(indexUrl);
+
+        //文章列表页
+        List<MenuModel> menus = menuService.select();
+        if (menus != null) {
+            for (MenuModel model : menus) {
+                SiteMapUrlModel menuUrl = new SiteMapUrlModel();
+                menuUrl.setLoc(domain + "/menu/" + model.getId() + ".html");
+                menuUrl.setLastmod(simpleDateFormat.format(new Date()));
+                menuUrl.setChangefreq("daily");
+                menuUrl.setPriority("0.8");
+                urlset.add(menuUrl);
+            }
+        }
+
+        //关于我们
+        SiteMapUrlModel aboutUrl = new SiteMapUrlModel();
+        aboutUrl.setLoc(domain + "/about.html");
+        aboutUrl.setLastmod(simpleDateFormat.format(new Date()));
+        aboutUrl.setChangefreq("daily");
+        aboutUrl.setPriority("0.8");
+        urlset.add(aboutUrl);
+
+        //联系我们
+        SiteMapUrlModel contactUrl = new SiteMapUrlModel();
+        contactUrl.setLoc(domain + "/contact.html");
+        contactUrl.setLastmod(simpleDateFormat.format(new Date()));
+        contactUrl.setChangefreq("daily");
+        contactUrl.setPriority("0.8");
+        urlset.add(contactUrl);
+
+        //投稿
+        SiteMapUrlModel contributionUrl = new SiteMapUrlModel();
+        contributionUrl.setLoc(domain + "/contribution.html");
+        contributionUrl.setLastmod(simpleDateFormat.format(new Date()));
+        contributionUrl.setChangefreq("daily");
+        contributionUrl.setPriority("0.8");
+        urlset.add(contributionUrl);
+
+        //版权声明
+        SiteMapUrlModel copyrightUrl = new SiteMapUrlModel();
+        copyrightUrl.setLoc(domain + "/copyright.html");
+        copyrightUrl.setLastmod(simpleDateFormat.format(new Date()));
+        copyrightUrl.setChangefreq("daily");
+        copyrightUrl.setPriority("0.8");
+        urlset.add(copyrightUrl);
+
+        result = toXml(urlset);
+        LoggerTool.debug("result is {}", result);
+        return result;
     }
 
     public String toXml(List<SiteMapUrlModel> urlset) {

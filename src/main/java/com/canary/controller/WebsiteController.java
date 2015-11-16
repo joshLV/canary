@@ -29,20 +29,13 @@ public class WebsiteController {
     @RequestMapping(value = "/website", method = RequestMethod.GET)
     @ResponseBody
     public Result website() {
-        LoggerTool.getLogger().debug("no param");
+        LoggerTool.info("no param");
         Result<Object> result = new Result<Object>();
-        try {
-            result.setCode(0);
-            result.setMessage("success");
-            result.setObject(websiteService.select());
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        result.setCode(0);
+        result.setMessage("success");
+        result.setObject(websiteService.select());
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
     /**
@@ -51,20 +44,13 @@ public class WebsiteController {
     @RequestMapping(value = "/about", method = RequestMethod.GET)
     @ResponseBody
     public Result about() {
-        LoggerTool.getLogger().debug("no param");
+        LoggerTool.info("no param");
         Result<Object> result = new Result<Object>();
-        try {
-            result.setCode(0);
-            result.setMessage("success");
-            result.setObject(websiteService.selectAbout());
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        result.setCode(0);
+        result.setMessage("success");
+        result.setObject(websiteService.selectAbout());
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
     /**
@@ -73,20 +59,13 @@ public class WebsiteController {
     @RequestMapping(value = "/contact", method = RequestMethod.GET)
     @ResponseBody
     public Result contact() {
-        LoggerTool.getLogger().debug("no param");
+        LoggerTool.info("no param");
         Result<Object> result = new Result<Object>();
-        try {
-            result.setCode(0);
-            result.setMessage("success");
-            result.setObject(websiteService.selectContact());
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        result.setCode(0);
+        result.setMessage("success");
+        result.setObject(websiteService.selectContact());
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
     /**
@@ -95,20 +74,13 @@ public class WebsiteController {
     @RequestMapping(value = "/contribution", method = RequestMethod.GET)
     @ResponseBody
     public Result contribution() {
-        LoggerTool.getLogger().debug("no param");
+        LoggerTool.info("no param");
         Result<Object> result = new Result<Object>();
-        try {
-            result.setCode(0);
-            result.setMessage("success");
-            result.setObject(websiteService.selectContribution());
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        result.setCode(0);
+        result.setMessage("success");
+        result.setObject(websiteService.selectContribution());
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
     /**
@@ -117,20 +89,13 @@ public class WebsiteController {
     @RequestMapping(value = "/copyright", method = RequestMethod.GET)
     @ResponseBody
     public Result copyright() {
-        LoggerTool.getLogger().debug("no param");
+        LoggerTool.info("no param");
         Result<Object> result = new Result<Object>();
-        try {
-            result.setCode(0);
-            result.setMessage("success");
-            result.setObject(websiteService.selectCopyright());
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        result.setCode(0);
+        result.setMessage("success");
+        result.setObject(websiteService.selectCopyright());
+        LoggerTool.info("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
 }

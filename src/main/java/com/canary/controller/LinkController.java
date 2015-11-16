@@ -29,20 +29,13 @@ public class LinkController {
     @RequestMapping(value = "/link", method = RequestMethod.GET)
     @ResponseBody
     public Result link() {
-        LoggerTool.getLogger().debug("no param");
+        LoggerTool.debug("no param");
         Result<Object> result = new Result<Object>();
-        try {
-            result.setCode(0);
-            result.setMessage("success");
-            result.setObject(websiteService.selectLink());
-            LoggerTool.getLogger().debug("result " + JSON.toJSONString(result));
-            return result;
-        } catch (Exception e) {
-            result.setCode(-1);
-            result.setMessage("fail");
-            LoggerTool.getLogger().error("exception" + e.getMessage());
-            return result;
-        }
+        result.setCode(0);
+        result.setMessage("success");
+        result.setObject(websiteService.selectLink());
+        LoggerTool.debug("result is {}", JSON.toJSONString(result));
+        return result;
     }
 
 }
