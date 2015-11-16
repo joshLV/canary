@@ -49,22 +49,20 @@ public class UserController {
     /**
      * qq登录
      *
-     * @param code     授权码
-     * @param request  请求
-     * @param response 响应
+     * @param code 授权码
      * @return 结果
      */
     @RequestMapping(value = "/login/qq", method = RequestMethod.POST)
     @ResponseBody
-    public Result<Object> qqLogin(String code, HttpServletRequest request, HttpServletResponse response) {
+    public Result<Object> qqLogin(String code) {
         LoggerTool.info("param code is {}", code);
         Result<Object> result = new Result<Object>();
-            //return
-            result.setCode(0);
-            result.setMessage("success");
-            result.setObject("");
-            LoggerTool.info("user login result" + JSON.toJSONString(result));
-            return result;
+        //return
+        result.setCode(0);
+        result.setMessage("success");
+        result.setObject("");
+        LoggerTool.info("user login result" + JSON.toJSONString(result));
+        return result;
     }
 
     /**
@@ -99,13 +97,12 @@ public class UserController {
             result.setCode(0);
             result.setMessage("success");
             result.setObject(userHolder);
-            //todo
-            LoggerTool.info("user login result is {}" , JSON.toJSONString(result));
+            LoggerTool.info("user login result is {}", JSON.toJSONString(result));
             return result;
         } catch (Exception e) {
             result.setCode(-1);
             result.setMessage("fail");
-            LoggerTool.error("user login exception,message is {}" , e);
+            LoggerTool.error("user login exception,message is {}", e);
             return result;
         } finally {
             //记录登录失败次数和登陆日志
@@ -201,7 +198,7 @@ public class UserController {
 
         result.setCode(0);
         result.setMessage("success");
-        LoggerTool.info("user logout result is {}" , JSON.toJSONString(result));
+        LoggerTool.info("user logout result is {}", JSON.toJSONString(result));
         return result;
     }
 
