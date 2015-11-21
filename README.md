@@ -64,7 +64,7 @@
 - 008(完成)日志
 - www.canary.com/admin/log/select?username=canary&page=1&count=30
 - 009(完成)用户
-- www.canary.com/admin/user/insert?username=spring&password=spring&question=您自己的姓名是&answer=spring&role=User&mobile=18688888888&email=spring@qq.com
+- www.canary.com/admin/user/insert?username=spring&password=spring&question=您自己的姓名是&answer=spring&role=USER&mobile=18688888888&email=spring@qq.com
 - www.canary.com/admin/user/delete?id=4
 - www.canary.com/admin/user/update?id=4&nickname=spring1&password=spring1&question=您自己的姓名是&answer=spring1&role=USER&email=spring1@qq.com&mobile=120&qq=80000&sex=Secret&age=25&birthday=2000-01-01 12:00:00
 - www.canary.com/admin/user/select?id=4&username=china&mobile=18688888880&page=1&count=30
