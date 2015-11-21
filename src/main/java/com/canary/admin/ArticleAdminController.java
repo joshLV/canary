@@ -46,7 +46,7 @@ public class ArticleAdminController {
     /**
      * 新增文章
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = "/admin/article/insert", method = RequestMethod.POST)
     @ResponseBody
     public Result<Object> insert(ArticleParam param) {
@@ -79,7 +79,7 @@ public class ArticleAdminController {
     /**
      * 管理员删除文章
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = "/admin/article/delete", method = RequestMethod.POST)
     @ResponseBody
     public Result deleteArticle(ArticleParam param) {
@@ -103,7 +103,7 @@ public class ArticleAdminController {
     /**
      * 管理员修改文章
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = "/admin/article/update", method = RequestMethod.POST)
     @ResponseBody
     public Result updateArticle(ArticleParam param) {
@@ -133,7 +133,7 @@ public class ArticleAdminController {
     /**
      * 管理员查询文章
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = "/admin/articles/select", method = RequestMethod.GET)
     @ResponseBody
     public Result selectArticleList(ArticleParam param) {
@@ -160,7 +160,7 @@ public class ArticleAdminController {
     /**
      * 管理员查询文章
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = "/admin/article/select", method = RequestMethod.POST)
     @ResponseBody
     public Result selectArticle(@RequestParam Integer id) {
@@ -176,7 +176,7 @@ public class ArticleAdminController {
     /**
      * 图片上传
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = "/admin/image/upload", method = RequestMethod.POST)
     @ResponseBody
     public Result imageUpload(@RequestParam("files") CommonsMultipartFile[] files, HttpServletRequest request) {

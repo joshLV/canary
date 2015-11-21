@@ -30,10 +30,7 @@ public class WebsiteController {
     @ResponseBody
     public Result website() {
         LoggerTool.info("no param");
-        Result<Object> result = new Result<Object>();
-        result.setCode(0);
-        result.setMessage("success");
-        result.setObject(websiteService.select());
+        Result<Object> result = new Result<Object>(websiteService.select());
         LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }
@@ -45,10 +42,7 @@ public class WebsiteController {
     @ResponseBody
     public Result about() {
         LoggerTool.info("no param");
-        Result<Object> result = new Result<Object>();
-        result.setCode(0);
-        result.setMessage("success");
-        result.setObject(websiteService.selectAbout());
+        Result<Object> result = new Result<Object>(websiteService.selectAbout());
         LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }
@@ -60,10 +54,7 @@ public class WebsiteController {
     @ResponseBody
     public Result contact() {
         LoggerTool.info("no param");
-        Result<Object> result = new Result<Object>();
-        result.setCode(0);
-        result.setMessage("success");
-        result.setObject(websiteService.selectContact());
+        Result<Object> result = new Result<Object>(websiteService.selectContact());
         LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }
@@ -75,10 +66,7 @@ public class WebsiteController {
     @ResponseBody
     public Result contribution() {
         LoggerTool.info("no param");
-        Result<Object> result = new Result<Object>();
-        result.setCode(0);
-        result.setMessage("success");
-        result.setObject(websiteService.selectContribution());
+        Result<Object> result = new Result<Object>(websiteService.selectContribution());
         LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }
@@ -90,10 +78,7 @@ public class WebsiteController {
     @ResponseBody
     public Result copyright() {
         LoggerTool.info("no param");
-        Result<Object> result = new Result<Object>();
-        result.setCode(0);
-        result.setMessage("success");
-        result.setObject(websiteService.selectCopyright());
+        Result<Object> result = new Result<Object>(websiteService.selectCopyright());
         LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }

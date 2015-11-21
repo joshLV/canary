@@ -1,6 +1,7 @@
 package com.canary.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.canary.model.WebsiteModel;
 import com.canary.service.WebsiteService;
 import com.sunny.model.Result;
 import com.sunny.tool.LoggerTool;
@@ -30,10 +31,8 @@ public class LinkController {
     @ResponseBody
     public Result link() {
         LoggerTool.info("no param");
-        Result<Object> result = new Result<Object>();
-        result.setCode(0);
-        result.setMessage("success");
-        result.setObject(websiteService.selectLink());
+        WebsiteModel link = websiteService.selectLink();
+        Result<Object> result = new Result<Object>(link);
         LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }

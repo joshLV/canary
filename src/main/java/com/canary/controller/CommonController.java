@@ -30,10 +30,7 @@ public class CommonController {
     @ResponseBody
     public Result question() {
         LoggerTool.info("no param");
-        Result<Object> result = new Result<Object>();
-        result.setCode(0);
-        result.setMessage("success");
-        result.setObject(questionEnumToList());
+        Result<Object> result = new Result<Object>(questionEnumToList());
         LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }
@@ -42,9 +39,9 @@ public class CommonController {
         List<Object> result = new ArrayList<Object>();
         for (int i = 0; i < QuestionEnum.values().length; i++) {
             HashMap<Object, Object> tmp = new HashMap<Object, Object>();
-            tmp.put("code", QuestionEnum.values()[i].toCode());
-            tmp.put("name", QuestionEnum.values()[i].toName());
-            tmp.put("description", QuestionEnum.values()[i].toDescription());
+            tmp.put("code", QuestionEnum.values()[i].getCode());
+            tmp.put("name", QuestionEnum.values()[i].getName());
+            tmp.put("description", QuestionEnum.values()[i].getMessage());
             result.add(tmp);
         }
         return result;

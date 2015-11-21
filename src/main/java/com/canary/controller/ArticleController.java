@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.canary.annotation.Role;
 import com.canary.common.CanaryConstant;
 import com.canary.model.ArticleModel;
+import com.canary.model.ArticleRelationModel;
+import com.sunny.model.PagingResult;
 import com.sunny.model.Result;
 import com.canary.service.ArticleService;
 import com.sunny.tool.LoggerTool;
@@ -11,6 +13,8 @@ import com.sunny.validator.ValidatorTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 文章控制层
@@ -33,10 +37,10 @@ public class ArticleController {
     public Result selectArticleByMenuId(@PathVariable("menu") Integer menu, @PathVariable("page") Integer page) {
         LoggerTool.info("menuId is {}", menu);
         LoggerTool.info("page is {}", page);
-        Result<Object> result = new Result<Object>();
+
         //验证参数
-        ValidatorTool.validate(menu, "-1", "参数有误");
-        ValidatorTool.validateNumber(page, 1, Integer.MAX_VALUE, "-1", "参数有误");
+        ValidatorTool.validate(menu, -1, "参数有误");
+        ValidatorTool.validateNumber(page, 1, Integer.MAX_VALUE, -1, "参数有误");
 
         //设置默认数据
         int count = CanaryConstant.DEFAULT_PAGING_COUNT;
@@ -44,13 +48,11 @@ public class ArticleController {
         //查询数据
         ArticleModel param = new ArticleModel();
         param.setMenuId(menu);
-
         param.setPage(page);
         param.setCount(count);
-        result.setObject(articleService.selectArticleModelList(param));
+        PagingResult<ArticleModel> data = articleService.selectArticleModelList(param);
 
-        result.setCode(0);
-        result.setMessage("success");
+        Result<Object> result = new Result<Object>(data);
         LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
 
@@ -63,10 +65,8 @@ public class ArticleController {
     @ResponseBody
     public Result article(@PathVariable Integer id) {
         LoggerTool.info("id is {}", id);
-        Result<Object> result = new Result<Object>();
-        result.setCode(0);
-        result.setMessage("success");
-        result.setObject(articleService.selectById(id));
+        ArticleRelationModel data = articleService.selectById(id);
+        Result<Object> result = new Result<Object>(data);
         LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }
@@ -78,9 +78,9 @@ public class ArticleController {
     @ResponseBody
     public Result newArticles(@PathVariable("page") Integer page) {
         LoggerTool.info("page is {}", page);
-        Result<Object> result = new Result<Object>();
+
         //验证参数
-        ValidatorTool.validateNumber(page, 0, Integer.MAX_VALUE, "-1", "参数有误");
+        ValidatorTool.validateNumber(page, 0, Integer.MAX_VALUE, -1, "参数有误");
         int count = CanaryConstant.DEFAULT_PAGING_COUNT;
 
         //查询数据
@@ -88,9 +88,8 @@ public class ArticleController {
         param.setMenuId(null);
         param.setPage(page);
         param.setCount(count);
-        result.setObject(articleService.selectArticleModelList(param));
-        result.setCode(0);
-        result.setMessage("success");
+        PagingResult<ArticleModel> data = articleService.selectArticleModelList(param);
+        Result<Object> result = new Result<Object>(data);
         LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }
@@ -102,14 +101,14 @@ public class ArticleController {
     @ResponseBody
     public Result hot() {
         LoggerTool.info("no param");
-        Result<Object> result = new Result<Object>();
+
         //查询数据
         ArticleModel param = new ArticleModel();
         int count = CanaryConstant.DEFAULT_PAGING_COUNT;
         param.setCount(count);
-        result.setObject(articleService.selectHot(param));
-        result.setCode(0);
-        result.setMessage("success");
+
+        List<ArticleModel> articleModelList = articleService.selectHot(param);
+        Result<Object> result = new Result<Object>(articleModelList);
         LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }
@@ -122,11 +121,9 @@ public class ArticleController {
     @ResponseBody
     public Result up(Integer id) {
         LoggerTool.info("id is {}", id);
-        Result<Object> result = new Result<Object>();
+
         //查询数据
-        result.setObject("");
-        result.setCode(0);
-        result.setMessage("success");
+        Result<Object> result = new Result<Object>();
         LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
 

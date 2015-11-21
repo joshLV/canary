@@ -74,7 +74,7 @@ public class MenuService {
 //        index.setUrl("/index");
         index.setDescription("首页");
         index.setRank(0);
-        index.setDeleteStatus(DeleteStatusEnum.NotDelete.toName());
+        index.setDeleteStatus(DeleteStatusEnum.NOT_DELETE.getName());
         index.setOperator("system");
         Date time = new Date();
         index.setOperateTime(time);

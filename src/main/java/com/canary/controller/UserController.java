@@ -58,9 +58,6 @@ public class UserController {
         LoggerTool.info("param code is {}", code);
         Result<Object> result = new Result<Object>();
         //return
-        result.setCode(0);
-        result.setMessage("success");
-        result.setObject("");
         LoggerTool.info("user login result is {}", JSON.toJSONString(result));
         return result;
     }
@@ -75,8 +72,8 @@ public class UserController {
         Result<Object> result = new Result<Object>();
         try {
             //validate params
-            ValidatorTool.validateString(model.getUsername(), 5, 20, "-1", "param exception");
-            ValidatorTool.validateString(model.getPassword(), 5, 20, "-1", "param exception");
+            ValidatorTool.validateString(model.getUsername(), 5, 20, -1, "param exception");
+            ValidatorTool.validateString(model.getPassword(), 5, 20, -1, "param exception");
 
             //login
             UserModel userModel = userService.login(model);
@@ -94,20 +91,20 @@ public class UserController {
             CookieTool.setCookie(request, response, CanaryConstant.COOKIE_NAME, SecurityTool.encodeAes(JSON.toJSONString(userHolder), userModel.getSign()));
 
             //return
-            result.setCode(0);
+            result.setStatus(0);
             result.setMessage("success");
-            result.setObject(userHolder);
+            result.setData(userHolder);
             LoggerTool.info("user login result is {}", JSON.toJSONString(result));
             return result;
         } catch (Exception e) {
-            result.setCode(-1);
+            result.setStatus(-1);
             result.setMessage("fail");
             LoggerTool.error("user login exception,message is {}", e);
             return result;
         } finally {
             //记录登录失败次数和登陆日志
-            threadPoolTaskExecutor.execute(new RecordLoginFailTimesRunnable(result.getCode(), model.getUsername()));
-            threadPoolTaskExecutor.execute(new LogRunnable(result.getCode(), model, request, response));
+            threadPoolTaskExecutor.execute(new RecordLoginFailTimesRunnable(result.getStatus(), model.getUsername()));
+            threadPoolTaskExecutor.execute(new LogRunnable(result.getStatus(), model, request, response));
         }
     }
 
@@ -192,12 +189,10 @@ public class UserController {
     @ResponseBody
     public Result<Object> logout(HttpServletRequest request, HttpServletResponse response) {
         LoggerTool.info("no param");
-        Result<Object> result = new Result<Object>();
         //设置cookie
         CookieTool.setCookie(request, response, 0, CanaryConstant.COOKIE_NAME, null);
 
-        result.setCode(0);
-        result.setMessage("success");
+        Result<Object> result = new Result<Object>();
         LoggerTool.info("user logout result is {}", JSON.toJSONString(result));
         return result;
     }
