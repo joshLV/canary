@@ -57,7 +57,7 @@ public class AdService {
     }
 
     public static boolean isEnable(AdModel ad) {
-        return EnableStatusEnum.Enable.toName().equalsIgnoreCase(ad.getEnableStatus());
+        return EnableStatusEnum.ENABLE.getName().equalsIgnoreCase(ad.getEnableStatus());
     }
 
     public static boolean isCorrectSite(AdModel ad) {
