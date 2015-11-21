@@ -41,8 +41,8 @@ public class AdAdminController {
 
         //验证参数
         String[] names = new String[]{WebsiteConstant.TOP_AD, WebsiteConstant.CENTER_AD, WebsiteConstant.BOTTOM_AD, WebsiteConstant.RIGHT_AD};
-        ValidatorTool.validateStringAmong(param.getName(), names, "-1", "参数错误");
-        ValidatorTool.validateString(param.getValue(), 1, 1024, "-1", "参数错误");
+        ValidatorTool.validateStringAmong(param.getName(), names, -1, "参数错误");
+        ValidatorTool.validateString(param.getValue(), 1, 1024, -1, "参数错误");
 
         //设置用户
         param.setOperator(UserRequestContext.getUsername());

@@ -57,16 +57,16 @@ public class ArticleAdminController {
         param.setCreator(UserRequestContext.getUsername());
 
         // 验证参数
-        ValidatorTool.validateNotNull(param, "-1", "参数有误");
-        ValidatorTool.validateNotNull(param.getMenuId(), "-1", "参数有误");
-        ValidatorTool.validateString(param.getTags(), 0, Integer.MAX_VALUE, "-1", "参数有误");
-        ValidatorTool.validateString(param.getTitle(), 0, Integer.MAX_VALUE, "-1", "参数有误");
-        ValidatorTool.validateString(param.getContent(), 0, Integer.MAX_VALUE, "-1", "参数有误");
-        ValidatorTool.validateString(param.getAuthor(), 0, Integer.MAX_VALUE, "-1", "参数有误");
-        ValidatorTool.validateNumber(param.getRank(), "-1", "参数有误");
+        ValidatorTool.validateNotNull(param, -1, "参数有误");
+        ValidatorTool.validateNotNull(param.getMenuId(), -1, "参数有误");
+        ValidatorTool.validateString(param.getTags(), 0, Integer.MAX_VALUE, -1, "参数有误");
+        ValidatorTool.validateString(param.getTitle(), 0, Integer.MAX_VALUE, -1, "参数有误");
+        ValidatorTool.validateString(param.getContent(), 0, Integer.MAX_VALUE, -1, "参数有误");
+        ValidatorTool.validateString(param.getAuthor(), 0, Integer.MAX_VALUE, -1, "参数有误");
+        ValidatorTool.validateNumber(param.getRank(), -1, "参数有误");
         //来源名称和来源链接可以为空
-//            ValidatorTool.validateString(param.getSourceName(),0,Integer.MAX_VALUE,"-1","参数有误");
-//            ValidatorTool.validateString(param.getSourceUrl(), 0, Integer.MAX_VALUE, "-1", "参数有误");
+//            ValidatorTool.validateString(param.getSourceName(),0,Integer.MAX_VALUE,-1,"参数有误");
+//            ValidatorTool.validateString(param.getSourceUrl(), 0, Integer.MAX_VALUE, -1, "参数有误");
 
         //新增文章 返回文章主键
         Integer object = articleService.insert(param);
@@ -89,8 +89,8 @@ public class ArticleAdminController {
         param.setOperator(UserRequestContext.getUsername());
 
         //验证参数
-        ValidatorTool.validate(param, "-1", "参数错误");
-        ValidatorTool.validate(param.getId(), "-1", "参数错误");
+        ValidatorTool.validate(param, -1, "参数错误");
+        ValidatorTool.validate(param.getId(), -1, "参数错误");
 
         //删除
         articleService.delete(param);
@@ -113,14 +113,14 @@ public class ArticleAdminController {
         param.setOperator(UserRequestContext.getUsername());
 
         // 验证参数
-        ValidatorTool.validateNotNull(param, "-1", "参数有误");
-        ValidatorTool.validate(param.getId(), "-1", "参数错误");
-        ValidatorTool.validateNotNull(param.getMenuId(), "-1", "参数有误");
-        ValidatorTool.validateString(param.getTags(), 0, Integer.MAX_VALUE, "-1", "参数有误");
-        ValidatorTool.validateString(param.getTitle(), 0, Integer.MAX_VALUE, "-1", "参数有误");
-        ValidatorTool.validateString(param.getContent(), 0, Integer.MAX_VALUE, "-1", "参数有误");
-        ValidatorTool.validateString(param.getAuthor(), 0, Integer.MAX_VALUE, "-1", "参数有误");
-        ValidatorTool.validateNumber(param.getRank(), "-1", "参数有误");
+        ValidatorTool.validateNotNull(param, -1, "参数有误");
+        ValidatorTool.validate(param.getId(), -1, "参数错误");
+        ValidatorTool.validateNotNull(param.getMenuId(), -1, "参数有误");
+        ValidatorTool.validateString(param.getTags(), 0, Integer.MAX_VALUE, -1, "参数有误");
+        ValidatorTool.validateString(param.getTitle(), 0, Integer.MAX_VALUE, -1, "参数有误");
+        ValidatorTool.validateString(param.getContent(), 0, Integer.MAX_VALUE, -1, "参数有误");
+        ValidatorTool.validateString(param.getAuthor(), 0, Integer.MAX_VALUE, -1, "参数有误");
+        ValidatorTool.validateNumber(param.getRank(), -1, "参数有误");
 
         //修改
         articleService.update(param);
@@ -140,9 +140,9 @@ public class ArticleAdminController {
         LoggerTool.info("param is {}", JSON.toJSONString(param));
 
         // 验证参数
-        ValidatorTool.validate(param.getMenuId(), "-1", "参数有误");
-        ValidatorTool.validateNumber(param.getCount(), 10, 50, "-1", "参数有误");
-        ValidatorTool.validateNumber(param.getPage(), 1, Integer.MAX_VALUE, "-1", "参数有误");
+        ValidatorTool.validate(param.getMenuId(), -1, "参数有误");
+        ValidatorTool.validateNumber(param.getCount(), 10, 50, -1, "参数有误");
+        ValidatorTool.validateNumber(param.getPage(), 1, Integer.MAX_VALUE, -1, "参数有误");
 
         //构造查询参数
         ArticleModel model = new ArticleModel();
@@ -218,12 +218,11 @@ public class ArticleAdminController {
             names.add(relativeFilename);
         }
 
-        Result<Object> result = new Result<Object>(names);
-        return result;
+        return new Result<Object>(names);
     }
 
     public static String getImageFileType(String filename) {
-        ValidatorTool.validateString(filename, 1, 1000, "-1", "file name error,file name length is too long");
+        ValidatorTool.validateString(filename, 1, 1000, -1, "file name error,file name length is too long");
 
         // to lower case
         filename = filename.toLowerCase();
