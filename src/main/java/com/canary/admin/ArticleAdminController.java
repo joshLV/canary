@@ -69,9 +69,9 @@ public class ArticleAdminController {
 //            ValidatorTool.validateString(param.getSourceUrl(), 0, Integer.MAX_VALUE, -1, "参数有误");
 
         //新增文章 返回文章主键
-        Integer object = articleService.insert(param);
+        Integer data = articleService.insert(param);
 
-        Result<Object> result = new Result<Object>(object);
+        Result<Object> result = new Result<Object>(data);
         LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }
@@ -150,9 +150,9 @@ public class ArticleAdminController {
         model.setPage(param.getPage());
         model.setCount(param.getCount());
         model.setTitle(param.getTitle());
-        PagingResult<ArticleRelationModel> object = articleService.select(model);
+        PagingResult<ArticleRelationModel> data = articleService.select(model);
 
-        Result<Object> result = new Result<Object>(object);
+        Result<Object> result = new Result<Object>(data);
         LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }
@@ -166,9 +166,9 @@ public class ArticleAdminController {
     public Result selectArticle(@RequestParam Integer id) {
         LoggerTool.info("id is {}", id);
 
-        ArticleRelationModel object = articleService.selectById(id);
+        ArticleRelationModel data = articleService.selectById(id);
 
-        Result<Object> result = new Result<Object>(object);
+        Result<Object> result = new Result<Object>(data);
         LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }

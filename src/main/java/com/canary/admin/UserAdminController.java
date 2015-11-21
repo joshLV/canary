@@ -42,13 +42,13 @@ public class UserAdminController {
         LoggerTool.info("param is {}", JSON.toJSONString(param));
 
         //验证参数
-        ValidatorTool.validateString(param.getUsername(), 5, 20, "-1", "参数错误");
-        ValidatorTool.validateString(param.getPassword(), 5, 20, "-1", "参数错误");
-        ValidatorTool.validateStringAmong(param.getQuestion(), new String[]{QuestionEnum.Q1.toDescription(), QuestionEnum.Q2.toDescription(), QuestionEnum.Q3.toDescription(), QuestionEnum.Q4.toDescription(), QuestionEnum.Q5.toDescription(), QuestionEnum.Q6.toDescription()}, "-1", "参数错误");
-        ValidatorTool.validateString(param.getAnswer(), 5, 20, "-1", "参数错误");
-        ValidatorTool.validateStringAmong(param.getRole(), new String[]{RoleEnum.User.toName(), RoleEnum.Admin.toName(), RoleEnum.Super.toName()}, "-1", "参数错误");
-        ValidatorTool.validateString(param.getEmail(), 5, 30, "-1", "参数错误");
-        ValidatorTool.validateString(param.getMobile(), 11, 11, "-1", "参数错误");
+        ValidatorTool.validateString(param.getUsername(), 5, 20, -1, "参数错误");
+        ValidatorTool.validateString(param.getPassword(), 5, 20, -1, "参数错误");
+        ValidatorTool.validateStringAmong(param.getQuestion(), new String[]{QuestionEnum.Q1.getMessage(), QuestionEnum.Q2.getMessage(), QuestionEnum.Q3.getMessage(), QuestionEnum.Q4.getMessage(), QuestionEnum.Q5.getMessage(), QuestionEnum.Q6.getMessage()}, -1, "参数错误");
+        ValidatorTool.validateString(param.getAnswer(), 5, 20, -1, "参数错误");
+        ValidatorTool.validateStringAmong(param.getRole(), new String[]{RoleEnum.USER.getName(), RoleEnum.ADMIN.getName(), RoleEnum.SUPER.getName()}, -1, "参数错误");
+        ValidatorTool.validateString(param.getEmail(), 5, 30, -1, "参数错误");
+        ValidatorTool.validateString(param.getMobile(), 11, 11, -1, "参数错误");
 
         //设置用户
         param.setOperator(UserRequestContext.getUsername());
@@ -72,7 +72,7 @@ public class UserAdminController {
         LoggerTool.info("id is {}", id);
 
         //验证参数
-        ValidatorTool.validate(id, "-1", "参数错误");
+        ValidatorTool.validate(id, -1, "参数错误");
 
         //删除
         UserModel model = new UserModel();
@@ -95,22 +95,22 @@ public class UserAdminController {
         LoggerTool.info("param is {}", JSON.toJSONString(param));
 
         //验证参数
-        ValidatorTool.validateNumber(param.getId(), "-1", "参数错误");
-        ValidatorTool.validateString(param.getNickname(), 5, 20, "-1", "参数错误");
-        ValidatorTool.validateString(param.getUsername(), 5, 20, "-1", "参数错误");
-        ValidatorTool.validateString(param.getPassword(), 5, 20, "-1", "参数错误");
-        ValidatorTool.validateStringAmong(param.getQuestion(), new String[]{QuestionEnum.Q1.toDescription(), QuestionEnum.Q2.toDescription(), QuestionEnum.Q3.toDescription(), QuestionEnum.Q4.toDescription(), QuestionEnum.Q5.toDescription(), QuestionEnum.Q6.toDescription()}, "-1", "参数错误");
-        ValidatorTool.validateString(param.getAnswer(), 5, 20, "-1", "参数错误");
-        ValidatorTool.validateStringAmong(param.getRole(), new String[]{RoleEnum.User.toName(), RoleEnum.Admin.toName(), RoleEnum.Super.toName()}, "-1", "参数错误");
-        ValidatorTool.validateString(param.getEmail(), 5, 30, "-1", "参数错误");
-        ValidatorTool.validateString(param.getMobile(), 11, 11, "-1", "参数错误");
+        ValidatorTool.validateNumber(param.getId(), -1, "参数错误");
+        ValidatorTool.validateString(param.getNickname(), 5, 20, -1, "参数错误");
+        ValidatorTool.validateString(param.getUsername(), 5, 20, -1, "参数错误");
+        ValidatorTool.validateString(param.getPassword(), 5, 20, -1, "参数错误");
+        ValidatorTool.validateStringAmong(param.getQuestion(), new String[]{QuestionEnum.Q1.getMessage(), QuestionEnum.Q2.getMessage(), QuestionEnum.Q3.getMessage(), QuestionEnum.Q4.getMessage(), QuestionEnum.Q5.getMessage(), QuestionEnum.Q6.getMessage()}, -1, "参数错误");
+        ValidatorTool.validateString(param.getAnswer(), 5, 20, -1, "参数错误");
+        ValidatorTool.validateStringAmong(param.getRole(), new String[]{RoleEnum.USER.getName(), RoleEnum.ADMIN.getName(), RoleEnum.SUPER.getName()}, -1, "参数错误");
+        ValidatorTool.validateString(param.getEmail(), 5, 30, -1, "参数错误");
+        ValidatorTool.validateString(param.getMobile(), 11, 11, -1, "参数错误");
         //如果设置了性别，性别必须是性别枚举中四种类型中的一种
         if (param.getSex() != null) {
-            ValidatorTool.validateStringAmong(param.getSex(), new String[]{SexEnum.Man.toName(), SexEnum.Woman.toName(), SexEnum.Other.toName(), SexEnum.Secret.toName()}, "-1", "参数错误");
+            ValidatorTool.validateStringAmong(param.getSex(), new String[]{SexEnum.MAN.getName(), SexEnum.WOMAN.getName(), SexEnum.OTHER.getName(), SexEnum.SECRET.getName()}, -1, "参数错误");
         }
-//            ValidatorTool.validateString(param.getQq(), 5, 12, "-1", "参数错误");
-//            ValidatorTool.validateNumber(param.getAge(), "-1", "参数错误");
-//            ValidatorTool.validate(param.getBirthday(), "-1", "参数错误");
+//            ValidatorTool.validateString(param.getQq(), 5, 12, -1, "参数错误");
+//            ValidatorTool.validateNumber(param.getAge(), -1, "参数错误");
+//            ValidatorTool.validate(param.getBirthday(), -1, "参数错误");
 
         //设置用户
         param.setOperator(UserRequestContext.getUsername());
@@ -132,10 +132,10 @@ public class UserAdminController {
     public Result select(UserModel param) {
         LoggerTool.info("param is {}", JSON.toJSONString(param));
 
-        ValidatorTool.validateNumber(param.getPage(), 1, Integer.MAX_VALUE, "-1", "参数有误");
+        ValidatorTool.validateNumber(param.getPage(), 1, Integer.MAX_VALUE, -1, "参数有误");
         //验证参数
-        ValidatorTool.validateNumber(param.getCount(), 10, 50, "-1", "参数有误");
-        ValidatorTool.validateNumber(param.getPage(), 1, Integer.MAX_VALUE, "-1", "参数有误");
+        ValidatorTool.validateNumber(param.getCount(), 10, 50, -1, "参数有误");
+        ValidatorTool.validateNumber(param.getPage(), 1, Integer.MAX_VALUE, -1, "参数有误");
 
         //查询
         PagingResult<UserModel> object = userService.select(param);

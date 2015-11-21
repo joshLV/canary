@@ -1,7 +1,5 @@
 package com.canary.enums;
 
-import java.util.TreeMap;
-
 /**
  * 角色枚举
  *
@@ -12,53 +10,45 @@ import java.util.TreeMap;
 @SuppressWarnings(value = "unused")
 public enum RoleEnum {
 
-    Guest(1, "Guest", "游客"),
-    User(2, "User", "普通"),
-    Admin(3, "Admin", "管理"),
-    Super(4, "Super", "超级");
+    GUEST(1, "GUEST", "游客"),
+    USER(2, "USER", "普通"),
+    ADMIN(3, "ADMIN", "管理"),
+    SUPER(4, "SUPER", "超级");
 
     private Integer code;
     private String name;
-    private String description;
+    private String message;
 
     /**
-     * @param code        code
-     * @param name        name
-     * @param description description
+     * @param code    code
+     * @param name    name
+     * @param message message
      */
-    RoleEnum(Integer code, String name, String description) {
+    RoleEnum(Integer code, String name, String message) {
         this.code = code;
         this.name = name;
-        this.description = description;
+        this.message = message;
     }
-
 
     /**
      * get the code of the enum
      */
-    public Integer toCode() {
+    public Integer getCode() {
         return this.code;
     }
 
     /**
      * get the name of the enum
      */
-    public String toName() {
+    public String getName() {
         return this.name;
     }
 
     /**
-     * get the description of the enum
+     * get the message of the enum
      */
-    public String toDescription() {
-        return this.description;
-    }
-
-    /**
-     * get the description of the enum
-     */
-    public String toString() {
-        return this.description;
+    public String getMessage() {
+        return this.message;
     }
 
     /**
@@ -71,7 +61,7 @@ public enum RoleEnum {
         RoleEnum[] values = RoleEnum.values();
         RoleEnum v = null;
         for (RoleEnum value : values) {
-            if (code.equals(value.toCode())) {
+            if (code.equals(value.getCode())) {
                 v = value;
                 break;
             }
@@ -89,38 +79,12 @@ public enum RoleEnum {
         RoleEnum[] values = RoleEnum.values();
         RoleEnum v = null;
         for (RoleEnum value : values) {
-            if (name.equalsIgnoreCase(value.toName())) {
+            if (name.equalsIgnoreCase(value.getName())) {
                 v = value;
                 break;
             }
         }
         return v;
-    }
-
-    /**
-     * get map ,the key is enum code,value is enum description
-     *
-     * @return map
-     */
-    public static TreeMap<Integer, String> toCodeDescriptionMap() {
-        TreeMap<Integer, String> map = new TreeMap<Integer, String>();
-        for (int i = 0; i < RoleEnum.values().length; i++) {
-            map.put(RoleEnum.values()[i].toCode(), RoleEnum.values()[i].toDescription());
-        }
-        return map;
-    }
-
-    /**
-     * get map ,the key is enum name,value is enum description
-     *
-     * @return map
-     */
-    public static TreeMap<String, String> toNameDescriptionMap() {
-        TreeMap<String, String> map = new TreeMap<String, String>();
-        for (int i = 0; i < RoleEnum.values().length; i++) {
-            map.put(RoleEnum.values()[i].toName(), RoleEnum.values()[i].toDescription());
-        }
-        return map;
     }
 
 }

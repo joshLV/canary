@@ -43,9 +43,9 @@ public class TagAdminController {
         param.setCreator(UserRequestContext.getUsername());
 
         //验证参数
-        ValidatorTool.validateString(param.getName(), 1, 20, "-1", "参数错误");
-        ValidatorTool.validateString(param.getDescription(), 1, 20, "-1", "参数错误");
-        ValidatorTool.validateNumber(param.getRank(), "-1", "参数错误");
+        ValidatorTool.validateString(param.getName(), 1, 20, -1, "参数错误");
+        ValidatorTool.validateString(param.getDescription(), 1, 20, -1, "参数错误");
+        ValidatorTool.validateNumber(param.getRank(), -1, "参数错误");
 
         //操作数据库
         Integer id = tagService.insert(param);
@@ -65,8 +65,8 @@ public class TagAdminController {
         LoggerTool.info("param is {}", JSON.toJSONString(param));
 
         //验证参数
-        ValidatorTool.validate(param, "-1", "参数错误");
-        ValidatorTool.validate(param.getId(), "-1", "参数错误");
+        ValidatorTool.validate(param, -1, "参数错误");
+        ValidatorTool.validate(param.getId(), -1, "参数错误");
 
         //设置用户
         param.setOperator(UserRequestContext.getUsername());
@@ -89,10 +89,10 @@ public class TagAdminController {
         LoggerTool.info("param is {}", JSON.toJSONString(param));
 
         //验证参数
-        ValidatorTool.validateNumber(param.getId(), "-1", "参数错误");
-        ValidatorTool.validateString(param.getName(), 1, 20, "-1", "参数错误");
-        ValidatorTool.validateString(param.getDescription(), 1, 20, "-1", "参数错误");
-        ValidatorTool.validateNumber(param.getRank(), "-1", "参数错误");
+        ValidatorTool.validateNumber(param.getId(), -1, "参数错误");
+        ValidatorTool.validateString(param.getName(), 1, 20, -1, "参数错误");
+        ValidatorTool.validateString(param.getDescription(), 1, 20, -1, "参数错误");
+        ValidatorTool.validateNumber(param.getRank(), -1, "参数错误");
 
         //设置用户
         param.setOperator(UserRequestContext.getUsername());

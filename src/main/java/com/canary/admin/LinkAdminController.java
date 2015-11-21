@@ -38,7 +38,7 @@ public class LinkAdminController {
         LoggerTool.info("param is {}", JSON.toJSONString(value));
 
         //验证参数
-        ValidatorTool.validateString(value, 1, 1024, "-1", "参数错误");
+        ValidatorTool.validateString(value, 1, 1024, -1, "参数错误");
 
         //设置用户
         WebsiteModel param = new WebsiteModel();

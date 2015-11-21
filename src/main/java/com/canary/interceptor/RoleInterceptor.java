@@ -53,7 +53,7 @@ public class RoleInterceptor implements HandlerInterceptor {
         // 获取角色
         String role;
         if (userHolder == null) {
-            role = RoleEnum.Guest.toName();
+            role = RoleEnum.GUEST.getName();
         } else {
             role = userHolder.getRole();
         }
@@ -78,8 +78,8 @@ public class RoleInterceptor implements HandlerInterceptor {
             //从cookie中获取用户主键和用户名
             Integer id = Integer.parseInt(CookieTool.getCookie(request, response, "id"));
             String username = CookieTool.getCookie(request, response, "username");
-            ValidatorTool.validateNotNull(id, "-1", "用户主键错误");
-            ValidatorTool.validateString(username, 5, 20, "-1", "用户名错误");
+            ValidatorTool.validateNotNull(id, -1, "用户主键错误");
+            ValidatorTool.validateString(username, 5, 20, -1, "用户名错误");
 
             //根据主键和用户名查出私钥
             String sign = userService.selectSign(id, username);

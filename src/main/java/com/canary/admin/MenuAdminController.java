@@ -39,9 +39,9 @@ public class MenuAdminController {
         LoggerTool.info("param is {}", JSON.toJSONString(param));
 
         //验证参数
-        ValidatorTool.validateString(param.getName(), 1, 20, "-1", "参数错误");
-        ValidatorTool.validateString(param.getDescription(), 1, 20, "-1", "参数错误");
-        ValidatorTool.validateNumber(param.getRank(), "-1", "参数错误");
+        ValidatorTool.validateString(param.getName(), 1, 20, -1, "参数错误");
+        ValidatorTool.validateString(param.getDescription(), 1, 20, -1, "参数错误");
+        ValidatorTool.validateNumber(param.getRank(), -1, "参数错误");
 
         //设置用户
         param.setOperator(UserRequestContext.getUsername());
@@ -65,8 +65,8 @@ public class MenuAdminController {
         LoggerTool.info("param is {}", JSON.toJSONString(param));
 
         //验证参数
-        ValidatorTool.validate(param, "-1", "参数错误");
-        ValidatorTool.validate(param.getId(), "-1", "参数错误");
+        ValidatorTool.validate(param, -1, "参数错误");
+        ValidatorTool.validate(param.getId(), -1, "参数错误");
 
         //设置用户
         param.setOperator(UserRequestContext.getUsername());
@@ -89,10 +89,10 @@ public class MenuAdminController {
         LoggerTool.info("param is {}", JSON.toJSONString(param));
 
         //验证参数
-        ValidatorTool.validateNumber(param.getId(), "-1", "参数错误");
-        ValidatorTool.validateString(param.getName(), 1, 20, "-1", "参数错误");
-        ValidatorTool.validateString(param.getDescription(), 1, 20, "-1", "参数错误");
-        ValidatorTool.validateNumber(param.getRank(), "-1", "参数错误");
+        ValidatorTool.validateNumber(param.getId(), -1, "参数错误");
+        ValidatorTool.validateString(param.getName(), 1, 20, -1, "参数错误");
+        ValidatorTool.validateString(param.getDescription(), 1, 20, -1, "参数错误");
+        ValidatorTool.validateNumber(param.getRank(), -1, "参数错误");
 
         //设置用户
         param.setOperator(UserRequestContext.getUsername());

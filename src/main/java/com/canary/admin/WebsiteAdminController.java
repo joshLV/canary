@@ -55,7 +55,7 @@ public class WebsiteAdminController {
         LoggerTool.info("param is {}", JSON.toJSONString(param));
 
         //验证参数
-        ValidatorTool.validate(param, "-1", "param error");
+        ValidatorTool.validate(param, -1, "param error");
 
         //设置操作人
         param.setOperator(UserRequestContext.getUsername());

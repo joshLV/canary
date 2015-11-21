@@ -36,12 +36,12 @@ public class DatabaseAdminController {
         LoggerTool.info("sql is {}", sql);
 
         //验证参数
-        ValidatorTool.validateString(sql, 1, Integer.MAX_VALUE, "-1", "参数错误");
+        ValidatorTool.validateString(sql, 1, Integer.MAX_VALUE, -1, "参数错误");
 
         //操作数据库
-        TableModel object = databaseService.executeSql(sql);
+        TableModel data = databaseService.executeSql(sql);
 
-        Result<Object> result = new Result<Object>(object);
+        Result<Object> result = new Result<Object>(data);
         LoggerTool.info("result is {}", JSON.toJSONString(result));
         return result;
     }

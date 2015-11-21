@@ -49,7 +49,7 @@ public class UserService {
         //如果是管理员用户，需要判断问题和答案必须存在
 //        String question = model.getQuestion();
 //        String answer = model.getAnswer();
-//        if ((RoleEnum.Admin.toName().equals(user.getRole()) || RoleEnum.Super.toName().equals(user.getRole()))
+//        if ((RoleEnum.ADMIN.getName().equals(user.getRole()) || RoleEnum.SUPER.getName().equals(user.getRole()))
 //                && (question == null || question.trim().length() <= 0 || answer == null || answer.trim().length() <= 0)) {
 //            throw new RuntimeException("管理员登录请输入问题和答案");
 //        }
@@ -121,7 +121,7 @@ public class UserService {
 
         //未填写性别的设置为保密
         if (param.getSex() == null || param.getSex().trim().length() <= 0) {
-            model.setSex(SexEnum.Secret.toName());
+            model.setSex(SexEnum.SECRET.getName());
         } else {
             model.setSex(param.getSex());
         }

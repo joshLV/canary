@@ -37,7 +37,7 @@ public class CacheAdminController {
     @RequestMapping(value = "/admin/cache/select", method = RequestMethod.GET)
     @ResponseBody
     public Result select() {
-        HashMap<Object, Object> object = new HashMap<Object, Object>();
+        HashMap<Object, Object> data = new HashMap<Object, Object>();
 
         //获取缓存全部数据
         Cache cache = cacheManager.getCache("customCache");
@@ -49,12 +49,12 @@ public class CacheAdminController {
                 Element element = ehcache.get(key);
                 if (element != null) {
                     Object value = element.getObjectValue();
-                    object.put(key, value);
+                    data.put(key, value);
                 }
             }
         }
 
-        Result<Object> result = new Result<Object>(object);
+        Result<Object> result = new Result<Object>(data);
         LoggerTool.info("result is{}", JSON.toJSONString(result));
         return result;
     }
@@ -67,7 +67,7 @@ public class CacheAdminController {
     public Result clear(String key) {
 
         //验证参数
-        ValidatorTool.validateString(key, 1, Integer.MAX_VALUE, "-1", "param exception.");
+        ValidatorTool.validateString(key, 1, Integer.MAX_VALUE, -1, "param exception.");
 
         //清除
         Cache cache = cacheManager.getCache("customCache");

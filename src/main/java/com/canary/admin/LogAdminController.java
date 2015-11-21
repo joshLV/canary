@@ -37,8 +37,8 @@ public class LogAdminController {
         LoggerTool.info("param is {}", JSON.toJSONString(param));
 
         //验证参数 用户名不验证 页数不能为空
-        ValidatorTool.validateNumber(param.getCount(), 10, 50, "-1", "参数有误");
-        ValidatorTool.validateNumber(param.getPage(), 1, Integer.MAX_VALUE, "-1", "参数有误");
+        ValidatorTool.validateNumber(param.getCount(), 10, 50, -1, "参数有误");
+        ValidatorTool.validateNumber(param.getPage(), 1, Integer.MAX_VALUE, -1, "参数有误");
 
         //查询
         LogModel model = new LogModel();
