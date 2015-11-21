@@ -32,7 +32,7 @@ public class MenuAdminController {
     /**
      * 管理员添加菜单
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = "/admin/menu/insert", method = RequestMethod.POST)
     @ResponseBody
     public Result insertMenu(MenuModel param) {
@@ -58,7 +58,7 @@ public class MenuAdminController {
     /**
      * 管理员删除菜单
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = "/admin/menu/delete", method = RequestMethod.POST)
     @ResponseBody
     public Result deleteMenu(MenuModel param) {
@@ -82,7 +82,7 @@ public class MenuAdminController {
     /**
      * 管理员修改菜单
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = "/admin/menu/update", method = RequestMethod.POST)
     @ResponseBody
     public Result updateMenu(MenuModel param) {
@@ -108,7 +108,7 @@ public class MenuAdminController {
     /**
      * 管理员查询菜单
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = "/admin/menu/select", method = RequestMethod.GET)
     @ResponseBody
     public Result selectMenu() {

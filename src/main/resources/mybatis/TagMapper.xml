@@ -7,7 +7,7 @@
         insert into t_tag(
             name,description,rank,delete_status,operator,operate_time,creator,create_time
         ) values(
-            #{name},#{description},#{rank},'NotDelete',#{operator},now(), #{creator},now()
+            #{name},#{description},#{rank},'NOT_DELETE',#{operator},now(), #{creator},now()
         );
     </insert>
 
@@ -15,21 +15,21 @@
     <update id="delete" parameterType="com.canary.model.TagModel">
         update t_tag
         set delete_status = 'Delete',operator = #{operator},operate_time = now()
-        where id = #{id} and delete_status = 'NotDelete'
+        where id = #{id} and delete_status = 'NOT_DELETE'
     </update>
 
     <!--改-->
     <update id="update" parameterType="com.canary.model.TagModel">
         update t_tag
         set name = #{name},description = #{description},rank = #{rank},operator = #{operator},operate_time = now()
-        where id = #{id} and delete_status = 'NotDelete'
+        where id = #{id} and delete_status = 'NOT_DELETE'
     </update>
 
     <!--查-->
     <select id="select" resultType="com.canary.model.TagModel">
         select id,name,description,rank,delete_status as deleteStatus,operator,operate_time as operateTime,creator,create_time as createTime
         from t_tag
-        where delete_status = 'NotDelete'
+        where delete_status = 'NOT_DELETE'
         order by rank;
     </select>
 

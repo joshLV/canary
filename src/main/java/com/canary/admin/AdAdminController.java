@@ -33,7 +33,7 @@ public class AdAdminController {
     /**
      * 管理员修改广告
      */
-    @Role(role = {"Super"})
+    @Role(role = {"SUPER"})
     @RequestMapping(value = "/admin/ad/update", method = RequestMethod.POST)
     @ResponseBody
     public Result updateAd(WebsiteModel param) {
@@ -58,7 +58,7 @@ public class AdAdminController {
     /**
      * 查询广告
      */
-    @Role(role = {"Super"})
+    @Role(role = {"SUPER"})
     @RequestMapping(value = "/admin/ad/select", method = RequestMethod.GET)
     @ResponseBody
     public Result link() {

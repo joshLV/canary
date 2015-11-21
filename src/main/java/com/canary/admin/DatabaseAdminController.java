@@ -29,7 +29,7 @@ public class DatabaseAdminController {
     /**
      * 执行sql语句
      */
-    @Role(role = {"Super"})
+    @Role(role = {"SUPER"})
     @RequestMapping(value = "/admin/database/execute", method = RequestMethod.POST)
     @ResponseBody
     public Result execute(String sql) {

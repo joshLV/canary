@@ -6,14 +6,14 @@
         insert into t_user(
             nickname,username,password,question,answer,role,sign,email,mobile,qq,sex,age,birthday,image,binding_mobile_status,binding_email_status,login_fail_times,enable_status,delete_status,operator,operate_time,creator,create_time
         ) values(
-            #{nickname},#{username},#{password},#{question},#{answer},#{role},#{sign},#{email},#{mobile},#{qq},#{sex},#{age},#{birthday},#{image},'UnBound','UnBound',0,'Enable','NotDelete',#{operator},now(), #{creator},now()
+            #{nickname},#{username},#{password},#{question},#{answer},#{role},#{sign},#{email},#{mobile},#{qq},#{sex},#{age},#{birthday},#{image},'NOT_BOUND','NOT_BOUND',0,'ENABLE','NOT_DELETE',#{operator},now(), #{creator},now()
         );
     </insert>
 
     <delete id="delete" parameterType="com.canary.model.UserModel">
         update t_user
-        set delete_status = 'Delete',operator = #{operator},operate_time = now()
-        where id = #{id} and delete_status = 'NotDelete'
+        set delete_status = 'DELETE',operator = #{operator},operate_time = now()
+        where id = #{id} and delete_status = 'NOT_DELETE'
     </delete>
 
     <!--根据主键或者用户名更新数据 主键和用户名必须有一个-->
@@ -81,7 +81,7 @@
     <update id="updateLoginFailTimesAddOne" parameterType="com.canary.model.UserModel">
         update t_user
         set operate_time = now(),login_fail_times = login_fail_times + 1
-        where username = #{username} and delete_status = 'NotDelete'
+        where username = #{username} and delete_status = 'NOT_DELETE'
     </update>
 
     <update id="updatePassword" parameterType="com.canary.model.UserModel">
@@ -103,7 +103,7 @@
         enableStatus,delete_status as deleteStatus,operator,operate_time as operateTime,creator,create_time as createTime
         from t_user
         <where>
-            delete_status = 'NotDelete'
+            delete_status = 'NOT_DELETE'
             <if test="id != null">
                 and id = #{id}
             </if>
@@ -149,7 +149,7 @@
         select count(1)
         from t_user
         <where>
-            delete_status = 'NotDelete'
+            delete_status = 'NOT_DELETE'
             <if test="id != null">
                 and id = #{id}
             </if>

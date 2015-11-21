@@ -28,7 +28,7 @@ public class PrivilegeAdminController {
     /**
      * 获取有权限的管理后台菜单
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = "/admin/privilege/select", method = {RequestMethod.GET})
     @ResponseBody
     public Result selectPrivilege() {

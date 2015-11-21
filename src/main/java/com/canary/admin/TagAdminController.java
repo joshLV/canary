@@ -32,7 +32,7 @@ public class TagAdminController {
     /**
      * 管理员添加标签
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = "/admin/tag/insert", method = RequestMethod.POST)
     @ResponseBody
     public Result insertTag(TagModel param) {
@@ -58,7 +58,7 @@ public class TagAdminController {
     /**
      * 管理员删除标签
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = "/admin/tag/delete", method = RequestMethod.POST)
     @ResponseBody
     public Result deleteTag(TagModel param) {
@@ -82,7 +82,7 @@ public class TagAdminController {
     /**
      * 管理员修改标签
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = "/admin/tag/update", method = RequestMethod.POST)
     @ResponseBody
     public Result updateTag(TagModel param) {
@@ -108,7 +108,7 @@ public class TagAdminController {
     /**
      * 管理员查询标签
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = "/admin/tag/select", method = RequestMethod.GET)
     @ResponseBody
     public Result selectTag() {

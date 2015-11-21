@@ -17,7 +17,7 @@ public class PageAdminController {
     /**
      * 后台
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = {"/admin"})
     public String admin() {
         return "/admin";
@@ -26,7 +26,7 @@ public class PageAdminController {
     /**
      * 基础信息
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = {"/admin/website/view"})
     public String website() {
         return "/website";
@@ -35,7 +35,7 @@ public class PageAdminController {
     /**
      * 菜单
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = {"/admin/menu/view"})
     public String menu() {
         return "/menu";
@@ -44,7 +44,7 @@ public class PageAdminController {
     /**
      * 标签
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = {"/admin/tag/view"})
     public String tag() {
         return "/tag";
@@ -53,7 +53,7 @@ public class PageAdminController {
     /**
      * 文章
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = {"/admin/article/view"})
     public String article() {
         return "/article";
@@ -62,7 +62,7 @@ public class PageAdminController {
     /**
      * 超级管理员权限链接
      */
-    @Role(role = {"Super"})
+    @Role(role = {"SUPER"})
     @RequestMapping(value = {"/admin/link/view"})
     public String link() {
         return "/link";
@@ -71,7 +71,7 @@ public class PageAdminController {
     /**
      * 超级管理员权限广告
      */
-    @Role(role = {"Super"})
+    @Role(role = {"SUPER"})
     @RequestMapping(value = {"/admin/ad/view"})
     public String ad() {
         return "/ad";
@@ -80,7 +80,7 @@ public class PageAdminController {
     /**
      * 超级管理员权限用户
      */
-    @Role(role = {"Super"})
+    @Role(role = {"SUPER"})
     @RequestMapping(value = {"/admin/user/view"})
     public String user() {
         return "/user";
@@ -89,7 +89,7 @@ public class PageAdminController {
     /**
      * 超级管理员权限数据
      */
-    @Role(role = {"Super"})
+    @Role(role = {"SUPER"})
     @RequestMapping(value = {"/admin/sql/view"})
     public String sql() {
         return "/sql";
@@ -98,7 +98,7 @@ public class PageAdminController {
     /**
      * 超级管理员权限日志
      */
-    @Role(role = {"Super"})
+    @Role(role = {"SUPER"})
     @RequestMapping(value = {"/admin/log/view"})
     public String log() {
         return "/log";

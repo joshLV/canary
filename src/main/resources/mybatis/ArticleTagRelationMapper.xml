@@ -7,7 +7,7 @@
         insert into t_article_tag_relation(
             article_id,tag_id,delete_status,operator,operate_time,creator,create_time
         ) values(
-            #{articleId},#{tagId},'NotDelete',#{operator},now(), #{creator},now()
+            #{articleId},#{tagId},'NOT_DELETE',#{operator},now(), #{creator},now()
         );
     </insert>
 
@@ -17,7 +17,7 @@
             article_id,tag_id,delete_status,operator,operate_time,creator,create_time
         )values
         <foreach collection="list" item="item" index="index" separator="," >
-            (#{item.articleId},#{item.tagId},'NotDelete',#{item.operator},now(),#{item.creator},now())
+            (#{item.articleId},#{item.tagId},'NOT_DELETE',#{item.operator},now(),#{item.creator},now())
         </foreach>
     </insert>
 
@@ -25,21 +25,21 @@
     <update id="delete" parameterType="com.canary.model.ArticleTagRelationModel">
         update t_article_tag_relation
         set delete_status = 'Delete',operator = #{operator},operate_time = now()
-        where id = #{id} and delete_status = 'NotDelete'
+        where id = #{id} and delete_status = 'NOT_DELETE'
     </update>
 
     <!--删 根据文章主键删除-->
     <update id="deleteByArticleId" parameterType="com.canary.model.ArticleTagRelationModel">
         update t_article_tag_relation
         set delete_status = 'Delete',operator = #{operator},operate_time = now()
-        where article_id = #{articleId} and delete_status = 'NotDelete'
+        where article_id = #{articleId} and delete_status = 'NOT_DELETE'
     </update>
 
     <!--改-->
     <!--<update id="update" parameterType="com.canary.model.ArticleTagRelationModel">-->
         <!--update t_article_tag_relation-->
         <!--set article_id = #{articleId},tag_id = #{tagId},operator = #{operator},operate_time = now()-->
-        <!--where id = #{id} and delete_status = 'NotDelete'-->
+        <!--where id = #{id} and delete_status = 'NOT_DELETE'-->
     <!--</update>-->
 
 </mapper>

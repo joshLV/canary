@@ -21,8 +21,6 @@ import javax.servlet.http.HttpServletResponse;
  * @version 1.0.0
  * @since 2015-11-16
  */
-@Aspect
-@Component
 public class PrivilegeAop {
 
     @Autowired

@@ -31,7 +31,7 @@ public class LinkAdminController {
     /**
      * 管理员修改链接
      */
-    @Role(role = {"Super"})
+    @Role(role = {"SUPER"})
     @RequestMapping(value = "/admin/link/update", method = RequestMethod.POST)
     @ResponseBody
     public Result updateLink(String value) {
@@ -57,7 +57,7 @@ public class LinkAdminController {
     /**
      * 管理员查询友情链接
      */
-    @Role(role = {"Super"})
+    @Role(role = {"SUPER"})
     @RequestMapping(value = "/admin/link/select", method = RequestMethod.GET)
     @ResponseBody
     public Result selectLink() {

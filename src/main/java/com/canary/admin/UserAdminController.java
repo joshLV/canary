@@ -35,7 +35,7 @@ public class UserAdminController {
     /**
      * 新增用户并设置用户级别
      */
-    @Role(role = {"Super"})
+    @Role(role = {"SUPER"})
     @RequestMapping(value = "/admin/user/insert", method = {RequestMethod.POST})
     @ResponseBody
     public Result insert(InsertUserParam param) {
@@ -65,7 +65,7 @@ public class UserAdminController {
     /**
      * 删除用户
      */
-    @Role(role = {"Super"})
+    @Role(role = {"SUPER"})
     @RequestMapping(value = "/admin/user/delete", method = {RequestMethod.POST})
     @ResponseBody
     public Result delete(Integer id) {
@@ -88,7 +88,7 @@ public class UserAdminController {
     /**
      * 修改用户
      */
-    @Role(role = {"Super"})
+    @Role(role = {"SUPER"})
     @RequestMapping(value = "/admin/user/update", method = {RequestMethod.POST})
     @ResponseBody
     public Result update(UserModel param) {
@@ -126,7 +126,7 @@ public class UserAdminController {
     /**
      * 分页查询用户
      */
-    @Role(role = {"Super"})
+    @Role(role = {"SUPER"})
     @RequestMapping(value = "/admin/user/select", method = {RequestMethod.GET})
     @ResponseBody
     public Result select(UserModel param) {

@@ -7,7 +7,7 @@
         insert into t_log(
         username,password,question,answer,result,address,ip,delete_status,operator,operate_time,creator,create_time
         ) values(
-        #{username}, #{password},#{question},#{answer},#{result},#{address},#{ip},'NotDelete','system',now(), 'system',now()
+        #{username}, #{password},#{question},#{answer},#{result},#{address},#{ip},'NOT_DELETE','system',now(), 'system',now()
         );
     </insert>
 
@@ -15,7 +15,7 @@
     <update id="delete" parameterType="com.canary.model.LogModel">
         update t_log
         set delete_status = 'Delete',operator = #{operator},operate_time = now()
-        where id = #{id} and delete_status = 'NotDelete'
+        where id = #{id} and delete_status = 'NOT_DELETE'
     </update>
 
     <!--查 按时间分页查询登陆记录-->
@@ -24,7 +24,7 @@
         deleteStatus,operator,operate_time as operateTime,creator,create_time as createTime
         from t_log
         <where>
-            delete_status = 'NotDelete'
+            delete_status = 'NOT_DELETE'
             <if test="username != null and username != ''">
                 and username = #{username}
             </if>
@@ -40,7 +40,7 @@
         select count(1)
         from t_log
         <where>
-            delete_status = 'NotDelete'
+            delete_status = 'NOT_DELETE'
             <if test="username != null and username != ''">
                 and username = #{username}
             </if>

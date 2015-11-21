@@ -31,7 +31,7 @@ public class WebsiteAdminController {
     /**
      * 查询基础信息
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = "/admin/website/select", method = RequestMethod.GET)
     @ResponseBody
     public Result selectWebsite() {
@@ -47,8 +47,7 @@ public class WebsiteAdminController {
     /**
      * 修改基础信息
      */
-    @Role(role = {"Admin", "Super"})
-    @SuppressWarnings(value = "unused,unchecked")
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = "/admin/website/update", method = RequestMethod.POST)
     @ResponseBody
     public Result updateWebsite(WebsiteParam param) {

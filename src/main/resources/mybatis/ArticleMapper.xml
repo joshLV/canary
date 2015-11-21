@@ -7,7 +7,7 @@
         insert into t_article(
             menu_id,title,content,author,source_name,source_url,click_count,up_count,down_count,rank,delete_status,operator,operate_time,creator,create_time
         ) values(
-            #{menuId},#{title},#{content},#{author},#{sourceName},#{sourceUrl},0,0,0,#{rank},'NotDelete',#{operator},now(),#{creator},now()
+            #{menuId},#{title},#{content},#{author},#{sourceName},#{sourceUrl},0,0,0,#{rank},'NOT_DELETE',#{operator},now(),#{creator},now()
         );
     </insert>
 
@@ -15,14 +15,14 @@
     <update id="delete" parameterType="com.canary.model.ArticleModel">
         update t_article
         set delete_status = 'Delete',operator = #{operator},operate_time = now()
-        where id = #{id} and delete_status = 'NotDelete'
+        where id = #{id} and delete_status = 'NOT_DELETE'
     </update>
 
     <!--改-->
     <update id="update" parameterType="com.canary.model.ArticleModel">
         update t_article
         set menu_id = #{menuId},title = #{title},content = #{content},author = #{author},source_name = #{sourceName},source_url = #{sourceUrl},rank = #{rank},operator = #{operator},operate_time = now()
-        where id = #{id} and delete_status = 'NotDelete'
+        where id = #{id} and delete_status = 'NOT_DELETE'
     </update>
 
     <!--查 根据主键查询文章-->
@@ -37,7 +37,7 @@
         left outer join t_menu as tm on ta.menu_id = tm.id
         left outer join t_article_tag_relation as tr on ta.id = tr.article_id
 		left outer join t_tag as tt on tr.tag_id = tt.id
-        where ta.id = #{id} and ta.delete_status = 'NotDelete' and tm.delete_status = 'NotDelete' and tr.delete_status = 'NotDelete' and tt.delete_status = 'NotDelete'
+        where ta.id = #{id} and ta.delete_status = 'NOT_DELETE' and tm.delete_status = 'NOT_DELETE' and tr.delete_status = 'NOT_DELETE' and tt.delete_status = 'NOT_DELETE'
         order by ta.rank asc
     </select>
 
@@ -87,10 +87,10 @@
         left outer join t_article_tag_relation as tr on ta.id = tr.article_id
         left outer join t_tag as tt on tr.tag_id = tt.id
         <where>
-            ta.delete_status = 'NotDelete'
-            and tm.delete_status = 'NotDelete'
-            and tr.delete_status = 'NotDelete'
-            and tt.delete_status = 'NotDelete'
+            ta.delete_status = 'NOT_DELETE'
+            and tm.delete_status = 'NOT_DELETE'
+            and tr.delete_status = 'NOT_DELETE'
+            and tt.delete_status = 'NOT_DELETE'
             <if test="menuId != null">
                 and ta.menu_id = #{menuId}
             </if>
@@ -109,7 +109,7 @@
         select count(1)
         from t_article ta
         <where>
-            ta.delete_status = 'NotDelete'
+            ta.delete_status = 'NOT_DELETE'
             <if test="menuId != null">
                 and ta.menu_id = #{menuId}
             </if>
@@ -126,7 +126,7 @@
         ta.creator,ta.create_time as createTime
         from t_article ta
         <where>
-            ta.delete_status = 'NotDelete'
+            ta.delete_status = 'NOT_DELETE'
             <if test="menuId != null">
                 and ta.menu_id = #{menuId}
             </if>
@@ -142,7 +142,7 @@
         select id,menu_id as menuId,title,content,author,source_name as sourceName,source_url as sourceUrl,click_count as clickCount,up_count as upCount,
         down_count as downCount,rank,delete_status as deleteStatus,operator,operate_time as operateTime,creator,create_time as createTime
         from t_article ta
-        where  ta.delete_status = 'NotDelete'
+        where  ta.delete_status = 'NOT_DELETE'
         order by ta.up_count desc
         limit #{count}
     </select>

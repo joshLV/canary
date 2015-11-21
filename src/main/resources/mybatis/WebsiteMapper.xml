@@ -8,19 +8,19 @@
         value = #{value},
         operator = #{operator},
         operate_time = now()
-        where delete_status = 'NotDelete' and name = #{name};
+        where delete_status = 'NOT_DELETE' and name = #{name};
     </update>
 
     <select id="select" resultType="com.canary.model.WebsiteModel">
         select id,name,value,description,delete_status as deleteStatus,operator,operate_time as operateTime,creator,create_time as createTime
         from t_website
-        where delete_status = 'NotDelete';
+        where delete_status = 'NOT_DELETE';
     </select>
 
     <select id="selectByName" parameterType="java.lang.String" resultType="com.canary.model.WebsiteModel">
         select id,name,value,description,delete_status as deleteStatus,operator,operate_time as operateTime,creator,create_time as createTime
         from t_website
-        where delete_status = 'NotDelete' and name = #{name};
+        where delete_status = 'NOT_DELETE' and name = #{name};
     </select>
 
 </mapper>

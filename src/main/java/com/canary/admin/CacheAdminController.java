@@ -33,7 +33,7 @@ public class CacheAdminController {
     /**
      * 获取所有缓存
      */
-    @Role(role = {"Admin", "Super"})
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = "/admin/cache/select", method = RequestMethod.GET)
     @ResponseBody
     public Result select() {
@@ -62,6 +62,7 @@ public class CacheAdminController {
     /**
      * 清除缓存
      */
+    @Role(role = {"ADMIN", "SUPER"})
     @RequestMapping(value = "/admin/cache/clear", method = RequestMethod.POST)
     @ResponseBody
     public Result clear(String key) {

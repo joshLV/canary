@@ -30,7 +30,7 @@ public class LogAdminController {
     /**
      * 查询管理员登陆日志
      */
-    @Role(role = {"Super"})
+    @Role(role = {"SUPER"})
     @RequestMapping(value = "/admin/log/select", method = RequestMethod.GET)
     @ResponseBody
     public Result selectLog(LogModel param) {
