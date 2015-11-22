@@ -5,6 +5,7 @@ import com.canary.common.CanaryConstant;
 import com.canary.model.LogModel;
 import com.canary.model.UserModel;
 import com.canary.service.LogService;
+import com.canary.service.QqOpenPlatformService;
 import com.canary.service.UserService;
 import com.sunny.context.UserHolder;
 import com.sunny.model.Result;
@@ -42,23 +43,29 @@ public class UserController {
     @Autowired
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
+    @Autowired
+    private QqOpenPlatformService qqOpenPlatformService;
+
     /**
      * todo 用户注册
      */
 
     /**
-     * qq登录
+     * qq登录 点击登录后打开一个小窗口，点击登录，授权，关闭小窗口，刷新主页面
      *
      * @param code 授权码
      * @return 结果
      */
-    @RequestMapping(value = "/login/qq", method = RequestMethod.POST)
+    @RequestMapping(value = "/login/qq", method = RequestMethod.GET)
     @ResponseBody
     public Result<Object> qqLogin(String code) {
         LoggerTool.info("param code is {}", code);
-        Result<Object> result = new Result<Object>();
-        //return
+
+        QqOpenPlatformService.QqUserModel qqUserModel = qqOpenPlatformService.getUserByAuthorizationCode(code);
+        Result<Object> result = new Result<Object>(qqUserModel);
         LoggerTool.info("user login result is {}", JSON.toJSONString(result));
+
+        // todo 写入cookie 跳转首页
         return result;
     }
 

@@ -18,13 +18,13 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class QqOpenPlatformService {
 
-    private  String clientId = "222425";
+    private  String clientId = "101268614";
 
-    @Value("${}")
-    private  String clientSecret = "1a43297ac2ff252962c80ef2d63b3a7a";
+//    @Value("${}")
+    private  String clientSecret = "0887aaff0cd3501ea3bd35bc972f822f";
 
-    @Value("${}")
-    private  String redirectUri = "http://www.mwkong.com/login/qq";
+//    @Value("${}")
+    private  String redirectUri = "http://127.0.0.1/login/qq";
 
     /**
      * 通过Authorization Code获取用户信息
