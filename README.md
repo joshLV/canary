@@ -83,7 +83,6 @@
 - http://36kr.com/
 - http://toutiao.com/
 - https://mybatis.github.io/mybatis-3/sqlmap-xml.html
-- http://jxd-zxf.iteye.com/blog/2072300
 - http://www.oschina.net/question/1261086_228410
 
 ##修改数据库编码
