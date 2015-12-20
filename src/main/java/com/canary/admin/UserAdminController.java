@@ -68,7 +68,7 @@ public class UserAdminController {
     @Role(role = {"SUPER"})
     @RequestMapping(value = "/admin/user/delete", method = {RequestMethod.POST})
     @ResponseBody
-    public Result delete(Integer id) {
+    public Result delete(Long id) {
         LoggerTool.info("id is {}", id);
 
         //验证参数

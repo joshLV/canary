@@ -36,7 +36,7 @@ public class LogService {
         List<LogModel> data = logDao.select(model);
 
         //查询总数
-        Integer total = logDao.selectTotalCount(model);
+        Long total = logDao.selectTotalCount(model);
 
         //返回
         PagingResult<LogModel> result = new PagingResult<LogModel>();

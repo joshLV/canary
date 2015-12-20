@@ -48,7 +48,7 @@ public class MenuAdminController {
         param.setCreator(UserRequestContext.getUsername());
 
         //操作数据库
-        Integer id = menuService.insert(param);
+        Long id = menuService.insert(param);
 
         Result<Object> result = new Result<Object>(id);
         LoggerTool.info("result is {}", JSON.toJSONString(result));

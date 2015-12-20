@@ -14,7 +14,7 @@ public class WebsiteModel extends BasicModel {
     /**
      * 主键
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 键
@@ -31,11 +31,11 @@ public class WebsiteModel extends BasicModel {
      */
     private String description;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -30,7 +30,7 @@ public class MenuService {
      * @param model 菜单对象
      * @return 菜单的主键
      */
-    public Integer insert(MenuModel model) {
+    public Long insert(MenuModel model) {
         return menuDao.insert(model);
     }
 
@@ -69,11 +69,11 @@ public class MenuService {
 
         //添加首页
         MenuModel index = new MenuModel();
-        index.setId(0);
+        index.setId(0L);
         index.setName("首页");
 //        index.setUrl("/index");
         index.setDescription("首页");
-        index.setRank(0);
+        index.setRank(0L);
         index.setDeleteStatus(DeleteStatusEnum.NOT_DELETE.getName());
         index.setOperator("system");
         Date time = new Date();

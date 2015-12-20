@@ -76,7 +76,7 @@ public class UserService {
      * @param username 管理员用户名
      * @return 私钥
      */
-    public String selectSign(Integer id, String username) {
+    public String selectSign(Long id, String username) {
         //查询私钥
         UserModel tmpModel = new UserModel();
         tmpModel.setId(id);
@@ -130,7 +130,7 @@ public class UserService {
         model.setImage(CanaryConstant.DEFAULT_AVATAR_PATH);
         model.setOperator(param.getOperator());
         model.setCreator(param.getCreator());
-        Integer id = userDao.insert(model);
+        Long id = userDao.insert(model);
 
         //select the insert user
         model.setId(id);
@@ -204,7 +204,7 @@ public class UserService {
         List<UserModel> data = userDao.select(model);
 
         //查询总数
-        Integer total = userDao.selectTotalCount(model);
+        Long total = userDao.selectTotalCount(model);
 
         //返回
         PagingResult<UserModel> result = new PagingResult<UserModel>();

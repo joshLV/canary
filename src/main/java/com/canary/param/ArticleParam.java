@@ -15,15 +15,15 @@ public class ArticleParam extends BasicParam {
     /**
      * 主键
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 菜单主键
      */
-    private Integer menuId;
+    private Long menuId;
 
     /**
-     * 标签 竖线分隔
+     * 标签 逗号分隔
      */
     private String tags;
 
@@ -55,13 +55,21 @@ public class ArticleParam extends BasicParam {
     /**
      * 排序值
      */
-    private Integer rank;
+    private Long rank;
 
-    public Integer getMenuId() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getMenuId() {
         return menuId;
     }
 
-    public void setMenuId(Integer menuId) {
+    public void setMenuId(Long menuId) {
         this.menuId = menuId;
     }
 
@@ -113,19 +121,11 @@ public class ArticleParam extends BasicParam {
         this.sourceUrl = sourceUrl;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getRank() {
+    public Long getRank() {
         return rank;
     }
 
-    public void setRank(Integer rank) {
+    public void setRank(Long rank) {
         this.rank = rank;
     }
 

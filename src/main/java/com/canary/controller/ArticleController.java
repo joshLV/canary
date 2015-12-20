@@ -34,7 +34,7 @@ public class ArticleController {
      */
     @RequestMapping(value = "/articles/{menu}/{page}", method = RequestMethod.GET)
     @ResponseBody
-    public Result selectArticleByMenuId(@PathVariable("menu") Integer menu, @PathVariable("page") Integer page) {
+    public Result selectArticleByMenuId(@PathVariable("menu") Long menu, @PathVariable("page") Integer page) {
         LoggerTool.info("menuId is {}", menu);
         LoggerTool.info("page is {}", page);
 

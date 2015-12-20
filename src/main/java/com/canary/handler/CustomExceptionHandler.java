@@ -26,10 +26,10 @@ public class CustomExceptionHandler implements HandlerExceptionResolver {
         if (ex instanceof CustomException) {
             CustomException customException = (CustomException) ex;
             LoggerTool.error("exception,message is {}" + ex.getMessage());
-            HttpTool.writeResult(request, response, customException.getCode(), customException.getMessage(), null);
+            HttpTool.write(request, response, customException.getCode(), customException.getMessage(), null);
         } else {
             LoggerTool.error("exception,message is {}" + ex.getMessage());
-            HttpTool.writeResult(request, response, -1, "system exception", null);
+            HttpTool.write(request, response, -1, "system exception", null);
         }
 
         return null;

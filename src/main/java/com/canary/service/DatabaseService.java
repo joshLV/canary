@@ -5,8 +5,6 @@ import com.canary.model.TableModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
-
 /**
  * 数据库服务层
  *

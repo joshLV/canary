@@ -15,39 +15,39 @@ public class ArticleTagRelationModel extends BasicModel {
     /**
      * 主键
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 文章主键
      */
-    private Integer articleId;
+    private Long articleId;
 
     /**
      * 标签主键
      */
-    private Integer tagId;
+    private Long tagId;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getArticleId() {
+    public Long getArticleId() {
         return articleId;
     }
 
-    public void setArticleId(Integer articleId) {
+    public void setArticleId(Long articleId) {
         this.articleId = articleId;
     }
 
-    public Integer getTagId() {
+    public Long getTagId() {
         return tagId;
     }
 
-    public void setTagId(Integer tagId) {
+    public void setTagId(Long tagId) {
         this.tagId = tagId;
     }
 

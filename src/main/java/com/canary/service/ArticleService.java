@@ -6,6 +6,9 @@ import com.canary.model.ArticleModel;
 import com.canary.model.ArticleRelationModel;
 import com.canary.param.ArticleParam;
 import com.canary.model.ArticleTagRelationModel;
+import com.google.common.base.Function;
+import com.google.common.base.Splitter;
+import com.google.common.collect.Lists;
 import com.sunny.model.PagingResult;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -47,24 +50,25 @@ public class ArticleService {
      * @return 主键
      */
     @Transactional
-    public Integer insert(ArticleParam param) {
+    public Long insert(ArticleParam param) {
         //新增文章
         ArticleModel model = new ArticleModel();
         BeanUtils.copyProperties(param, model);
-        Integer id = articleDao.insert(model);
+        Long id = articleDao.insert(model);
 
         //新增标签
         String tags = param.getTags();
-        List<Integer> tagList = new ArrayList<Integer>();
-        if (tags != null && tags.trim().length() > 0) {
-            String[] tagArray = tags.split(",");
-            for (String tmp : tagArray) {
-                tagList.add(Integer.valueOf(tmp));
+        List<String> tagStringList = Splitter.on(",").splitToList(tags);
+        List<Long> tagList =  Lists.transform(tagStringList, new Function<String, Long>() {
+            @Override
+            public Long apply(String input) {
+                return Long.valueOf(input);
             }
-        }
+        });
+
         if (tagList.size() > 0) {
             List<ArticleTagRelationModel> list = new ArrayList<ArticleTagRelationModel>();
-            for (Integer tagId : tagList) {
+            for (Long tagId : tagList) {
                 ArticleTagRelationModel relationModel = new ArticleTagRelationModel();
                 relationModel.setArticleId(id);
                 relationModel.setTagId(tagId);
@@ -117,16 +121,17 @@ public class ArticleService {
 
         //重新插入新的标签
         String tags = param.getTags();
-        List<Integer> tagList = new ArrayList<Integer>();
-        if (tags != null && tags.trim().length() > 0) {
-            String[] tagArray = tags.split(",");
-            for (String tmp : tagArray) {
-                tagList.add(Integer.valueOf(tmp));
+        List<String> tagStringList = Splitter.on(",").splitToList(tags);
+        List<Long> tagList =  Lists.transform(tagStringList, new Function<String, Long>() {
+            @Override
+            public Long apply(String input) {
+                return Long.valueOf(input);
             }
-        }
+        });
+
         if (tagList.size() > 0) {
             List<ArticleTagRelationModel> list = new ArrayList<ArticleTagRelationModel>();
-            for (Integer tagId : tagList) {
+            for (Long tagId : tagList) {
                 ArticleTagRelationModel relationModel = new ArticleTagRelationModel();
                 relationModel.setArticleId(param.getId());
                 relationModel.setTagId(tagId);
@@ -167,7 +172,7 @@ public class ArticleService {
         handleContent(data);
 
         //查询总数
-        Integer total = articleDao.selectTotalCount(m);
+        Long total = articleDao.selectTotalCount(m);
 
         //返回
         PagingResult<ArticleModel> result = new PagingResult<ArticleModel>();
@@ -189,7 +194,7 @@ public class ArticleService {
         List<ArticleRelationModel> data = articleDao.select(model);
 
         //查询总数
-        Integer total = articleDao.selectTotalCount(model);
+        Long total = articleDao.selectTotalCount(model);
 
         //返回
         PagingResult<ArticleRelationModel> result = new PagingResult<ArticleRelationModel>();

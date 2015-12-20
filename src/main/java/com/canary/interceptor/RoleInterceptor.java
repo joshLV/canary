@@ -61,7 +61,7 @@ public class RoleInterceptor implements HandlerInterceptor {
         //判断是否有权限
         Boolean flag = hasPrivilege(role, request, object);
         if (!flag) {
-            HttpTool.writeResult(request, response, -1, "error,no privilege", null);
+            HttpTool.write(request, response, -1, "error,no privilege", null);
         }
 
         return flag;
@@ -76,7 +76,7 @@ public class RoleInterceptor implements HandlerInterceptor {
     public void setCookie(HttpServletRequest request, HttpServletResponse response) {
         try {
             //从cookie中获取用户主键和用户名
-            Integer id = Integer.parseInt(CookieTool.getCookie(request, response, "id"));
+            Long id = Long.parseLong(CookieTool.getCookie(request, response, "id"));
             String username = CookieTool.getCookie(request, response, "username");
             ValidatorTool.validateNotNull(id, -1, "用户主键错误");
             ValidatorTool.validateString(username, 5, 20, -1, "用户名错误");

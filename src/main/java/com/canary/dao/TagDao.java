@@ -26,7 +26,7 @@ public class TagDao {
      * @param model 标签对象
      * @return 添加的标签的主键
      */
-    public Integer insert(TagModel model) {
+    public Long insert(TagModel model) {
         sqlSessionTemplate.insert("com.canary.mapper.TagMapper.insert", model);
         return model.getId();
     }

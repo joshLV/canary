@@ -20,7 +20,7 @@ public class UserModel extends BasicParam {
     /**
      * 主键
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 昵称
@@ -115,11 +115,11 @@ public class UserModel extends BasicParam {
      */
     private String enableStatus;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

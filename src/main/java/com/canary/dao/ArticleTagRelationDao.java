@@ -26,7 +26,7 @@ public class ArticleTagRelationDao {
      * @param model 对象
      * @return 添加的主键
      */
-    public Integer insert(ArticleTagRelationModel model) {
+    public Long insert(ArticleTagRelationModel model) {
         sqlSessionTemplate.insert("com.canary.mapper.ArticleTagRelationMapper.insert", model);
         return model.getId();
     }

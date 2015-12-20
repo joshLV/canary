@@ -69,7 +69,7 @@ public class ArticleAdminController {
 //            ValidatorTool.validateString(param.getSourceUrl(), 0, Integer.MAX_VALUE, -1, "参数有误");
 
         //新增文章 返回文章主键
-        Integer data = articleService.insert(param);
+        Long data = articleService.insert(param);
 
         Result<Object> result = new Result<Object>(data);
         LoggerTool.info("result is {}", JSON.toJSONString(result));

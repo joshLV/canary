@@ -26,7 +26,7 @@ public class MenuDao {
      * @param model 菜单对象
      * @return 添加的菜单的主键
      */
-    public Integer insert(MenuModel model) {
+    public Long insert(MenuModel model) {
         sqlSessionTemplate.insert("com.canary.mapper.MenuMapper.insert", model);
         return model.getId();
     }

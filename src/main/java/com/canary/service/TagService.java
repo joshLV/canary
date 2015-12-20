@@ -27,7 +27,7 @@ public class TagService {
      * @param model 标签对象
      * @return 标签的主键
      */
-    public Integer insert(TagModel model) {
+    public Long insert(TagModel model) {
         return tagDao.insert(model);
     }
 

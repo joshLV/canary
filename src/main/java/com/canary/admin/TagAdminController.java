@@ -48,7 +48,7 @@ public class TagAdminController {
         ValidatorTool.validateNumber(param.getRank(), -1, "参数错误");
 
         //操作数据库
-        Integer id = tagService.insert(param);
+        Long id = tagService.insert(param);
 
         Result<Object> result = new Result<Object>(id);
         LoggerTool.info("result is {}", JSON.toJSONString(result));

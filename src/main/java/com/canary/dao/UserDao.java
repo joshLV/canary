@@ -26,7 +26,7 @@ public class UserDao {
      * @param model user model
      * @return the key
      */
-    public Integer insert(UserModel model) {
+    public Long insert(UserModel model) {
         sqlSessionTemplate.insert("com.canary.mapper.UserMapper.insert", model);
         return model.getId();
     }
@@ -70,7 +70,7 @@ public class UserDao {
      * @param model 参数
      * @return 结果
      */
-    public Integer selectTotalCount(UserModel model) {
+    public Long selectTotalCount(UserModel model) {
         return sqlSessionTemplate.selectOne("com.canary.mapper.UserMapper.selectTotalCount", model);
     }
 

@@ -17,12 +17,12 @@ public class ArticleModel extends BasicParam {
     /**
      * 主键
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 菜单
      */
-    private Integer menuId;
+    private Long menuId;
 
     /**
      * 标题
@@ -72,21 +72,21 @@ public class ArticleModel extends BasicParam {
     /**
      * 排序值
      */
-    private Integer rank;
+    private Long rank;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getMenuId() {
+    public Long getMenuId() {
         return menuId;
     }
 
-    public void setMenuId(Integer menuId) {
+    public void setMenuId(Long menuId) {
         this.menuId = menuId;
     }
 
@@ -154,11 +154,11 @@ public class ArticleModel extends BasicParam {
         this.downCount = downCount;
     }
 
-    public Integer getRank() {
+    public Long getRank() {
         return rank;
     }
 
-    public void setRank(Integer rank) {
+    public void setRank(Long rank) {
         this.rank = rank;
     }
 

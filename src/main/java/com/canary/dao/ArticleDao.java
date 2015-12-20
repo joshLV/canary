@@ -26,7 +26,7 @@ public class ArticleDao {
      * 增
      */
     @Transactional
-    public Integer insert(ArticleModel model) {
+    public Long insert(ArticleModel model) {
         sqlSessionTemplate.insert("com.canary.mapper.ArticleMapper.insert", model);
         model.setRank(model.getId());
         update(model);
@@ -75,7 +75,7 @@ public class ArticleDao {
     /**
      * 查询文章总数
      */
-    public Integer selectTotalCount(ArticleModel model) {
+    public Long selectTotalCount(ArticleModel model) {
         return sqlSessionTemplate.selectOne("com.canary.mapper.ArticleMapper.selectTotalCount", model);
     }
 

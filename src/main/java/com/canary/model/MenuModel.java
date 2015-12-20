@@ -14,7 +14,7 @@ public class MenuModel extends BasicModel {
     /**
      * 主键
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 名称
@@ -29,13 +29,13 @@ public class MenuModel extends BasicModel {
     /**
      * 排序值
      */
-    private Integer rank;
+    private Long rank;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -55,11 +55,11 @@ public class MenuModel extends BasicModel {
         this.description = description;
     }
 
-    public Integer getRank() {
+    public Long getRank() {
         return rank;
     }
 
-    public void setRank(Integer rank) {
+    public void setRank(Long rank) {
         this.rank = rank;
     }
 

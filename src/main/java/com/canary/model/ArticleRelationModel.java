@@ -17,7 +17,7 @@ public class ArticleRelationModel extends BasicModel {
     /**
      * 主键
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 菜单
@@ -57,28 +57,28 @@ public class ArticleRelationModel extends BasicModel {
     /**
      * 点击量
      */
-    private Integer clickCount;
+    private Long clickCount;
 
     /**
      * 顶
      */
-    private Integer upCount;
+    private Long upCount;
 
     /**
      * 踩
      */
-    private Integer downCount;
+    private Long downCount;
 
     /**
      * 排序值
      */
-    private Integer rank;
+    private Long rank;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -138,35 +138,35 @@ public class ArticleRelationModel extends BasicModel {
         this.sourceUrl = sourceUrl;
     }
 
-    public Integer getClickCount() {
+    public Long getClickCount() {
         return clickCount;
     }
 
-    public void setClickCount(Integer clickCount) {
+    public void setClickCount(Long clickCount) {
         this.clickCount = clickCount;
     }
 
-    public Integer getUpCount() {
+    public Long getUpCount() {
         return upCount;
     }
 
-    public void setUpCount(Integer upCount) {
+    public void setUpCount(Long upCount) {
         this.upCount = upCount;
     }
 
-    public Integer getDownCount() {
+    public Long getDownCount() {
         return downCount;
     }
 
-    public void setDownCount(Integer downCount) {
+    public void setDownCount(Long downCount) {
         this.downCount = downCount;
     }
 
-    public Integer getRank() {
+    public Long getRank() {
         return rank;
     }
 
-    public void setRank(Integer rank) {
+    public void setRank(Long rank) {
         this.rank = rank;
     }
 

@@ -11,7 +11,7 @@ import com.sunny.model.BasicParam;
  */
 public class LogModel extends BasicParam {
 
-    private Integer id;
+    private Long id;
 
     private String username;
 
@@ -27,11 +27,11 @@ public class LogModel extends BasicParam {
 
     private String ip;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

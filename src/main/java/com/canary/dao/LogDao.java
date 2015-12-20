@@ -26,7 +26,7 @@ public class LogDao {
      * @param model 数据
      * @return the key
      */
-    public Integer insert(LogModel model) {
+    public Long insert(LogModel model) {
         sqlSessionTemplate.insert("com.canary.mapper.LogMapper.insert", model);
         return model.getId();
     }
@@ -56,7 +56,7 @@ public class LogDao {
      * @param model 参数
      * @return 结果
      */
-    public Integer selectTotalCount(LogModel model) {
+    public Long selectTotalCount(LogModel model) {
         return sqlSessionTemplate.selectOne("com.canary.mapper.LogMapper.selectTotalCount", model);
     }
 
