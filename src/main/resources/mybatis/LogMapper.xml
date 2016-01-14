@@ -36,7 +36,7 @@
     </select>
 
     <!--查询总数-->
-    <select id="selectTotalCount" parameterType="com.canary.model.LogModel" resultType="java.lang.Integer">
+    <select id="selectTotalCount" parameterType="com.canary.model.LogModel" resultType="java.lang.Long">
         select count(1)
         from t_log
         <where>

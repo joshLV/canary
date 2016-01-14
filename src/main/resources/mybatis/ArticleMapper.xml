@@ -105,7 +105,7 @@
     </select>
 
     <!--查询文章总数-->
-    <select id="selectTotalCount" parameterType="com.canary.model.ArticleModel" resultType="java.lang.Integer">
+    <select id="selectTotalCount" parameterType="com.canary.model.ArticleModel" resultType="java.lang.Long">
         select count(1)
         from t_article ta
         <where>
