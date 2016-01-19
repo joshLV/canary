@@ -39,16 +39,16 @@ public class RoleInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
         LoggerTool.info("uri is {}", request.getRequestURI());
 
+        //判断请求是否是静态资源
+        if (object instanceof DefaultServletHttpRequestHandler) {
+            return true;
+        }
+
         // 设置cookie
         setCookie(request, response);
 
         // 获取当前用户
         UserHolder userHolder = (UserHolder) request.getAttribute(Constant.USER_HOLDER_KEY);
-
-        //判断请求是否是静态资源
-        if (object instanceof DefaultServletHttpRequestHandler) {
-            return true;
-        }
 
         // 获取角色
         String role;
