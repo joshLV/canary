@@ -461,7 +461,7 @@
                         JVM_ARGS="-server -Dapp.key=canary -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8888 -Djava.io.tmpdir=/tmp -Djava.net.preferIPv6Addresses=false"
                         JVM_HEAP="-Xmn128m -XX:PermSize=128m -XX:MaxPermSize=128m -XX:+HeapDumpOnOutOfMemoryError -XX:ReservedCodeCacheSize=128m -XX:InitialCodeCacheSize=128m"
                         JVM_SIZE="-Xmx256m -Xms256m"
-                        JVM_GC="-XX:+PrintGCDetails -XX:+PrintHeapAtGC -XX:+PrintTenuringDistribution -XX:+UseConcMarkSweepGC -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -XX:CMSFullGCsBeforeCompaction=0 -XX:+UseCMSCompactAtFullCollection -XX:CMSInitiatingOccupancyFraction=80 -Xloggc:/opt/logs/mobile/opt/opt.gc.log"
+                        JVM_GC="-XX:+PrintGCDetails -XX:+PrintHeapAtGC -XX:+PrintTenuringDistribution -XX:+UseConcMarkSweepGC -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -XX:CMSFullGCsBeforeCompaction=0 -XX:+UseCMSCompactAtFullCollection -XX:CMSInitiatingOccupancyFraction=80 -Xloggc:/app/tmp/gc.log"
                     </jvmArgs>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
                 </configuration>
